@@ -37,6 +37,7 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
             };
             return View(productViewModel);
         }
+
         private List<SelectListItem> LoadCategories()
         {
             List<SelectListItem> categories = (from category in _categoryService.GetList()
