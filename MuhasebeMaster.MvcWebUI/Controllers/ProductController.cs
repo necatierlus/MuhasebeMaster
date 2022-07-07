@@ -64,6 +64,7 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
             }
             return RedirectToAction("GetProducts");
         }
+
         public IActionResult Add(ProductViewModel productViewModel)
         {
             if (ModelState.IsValid)

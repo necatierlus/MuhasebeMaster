@@ -40,6 +40,16 @@ namespace MuhasebeMaster.Business.Concrete.Managers
             return _prodDal.GetAll();
         }
 
+        public async Task<List<Prod>> GetProductWithDate()
+        {
+            return await _prodDal.GetProductByDate();
+        }
+
+        public Prod GetByName(string name)
+        {
+            return _prodDal.Get(d => d.Name == name);
+        }
+
         public Prod Update(Prod prod)
         {
             return _prodDal.Update(prod);
@@ -49,5 +59,6 @@ namespace MuhasebeMaster.Business.Concrete.Managers
         {
             return await _prodDal.UpdateAsync(prod);
         }
+
     }
 }

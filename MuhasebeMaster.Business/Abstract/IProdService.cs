@@ -15,5 +15,7 @@ namespace MuhasebeMaster.Business.Abstract
         void Delete(Prod prod);
         Prod GetById(Guid id);
         List<Prod> GetList();
+        Task<List<Prod>> GetProductWithDate();
+        Prod GetByName(string name);
     }
 }
