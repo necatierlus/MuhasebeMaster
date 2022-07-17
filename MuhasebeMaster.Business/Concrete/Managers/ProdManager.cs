@@ -40,9 +40,9 @@ namespace MuhasebeMaster.Business.Concrete.Managers
             return _prodDal.GetAll();
         }
 
-        public async Task<List<Prod>> GetProductWithDate()
+        public List<Prod> GetProductWithDate()
         {
-            return await _prodDal.GetProductByDate();
+            return _prodDal.GetProductByDate();
         }
 
         public Prod GetByName(string name)

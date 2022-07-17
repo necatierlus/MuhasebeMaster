@@ -10,6 +10,6 @@ namespace MuhasebeMaster.DataAccess.Abstract
 {
     public interface IProdDal : IEntityRepository<Prod> 
     {
-        Task<List<Prod>> GetProductByDate();
+        List<Prod> GetProductByDate();
     }
 }

@@ -25,8 +25,8 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
 
         public SecurityController(UserManager<AppIdentityUser> userManager, RoleManager<AppIdentityRole> roleManager,SignInManager<AppIdentityUser> signInManager,
             IConfiguration configuration, IMailService mailService, ILogger logger)
-        {
-            _userManager = userManager;
+        {  
+            _userManager = userManager; 
             _roleManager = roleManager;
             _signInManager = signInManager;
             _configuration = configuration;
@@ -100,7 +100,7 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
         public async Task<IActionResult> Register(RegisterViewModel registerViewModel) 
         {
             if (ModelState.IsValid)
-            {
+            {  
                 var user = new AppIdentityUser { 
                     Email = registerViewModel.Email,
                     UserName = registerViewModel.UserName
@@ -108,9 +108,9 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
                 var result = await _userManager.CreateAsync(user, registerViewModel.Password);
                 if (result.Succeeded)
                 {
-                    var confirmatiobCode = _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var confirmationCode = _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var projectUrl = _configuration.GetSection("ProjectSettings").GetSection("ProjectUrl").Value;
-                    var callBackUrl = projectUrl + Url.Action("ConfirmEmail", "Security", new { userId = user.Id, code = confirmatiobCode.Result });
+                    var callBackUrl = projectUrl + Url.Action("ConfirmEmail", "Security", new { userId = user.Id, code = confirmationCode.Result });
 
                     //Kullaniciya mail gonderme
                     var emailAddressesTo = new List<EmailAddress>();

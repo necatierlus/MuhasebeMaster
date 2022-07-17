@@ -10,7 +10,7 @@ using MuhasebeMaster.MvcWebUI.Models;
 
 namespace MuhasebeMaster.MvcWebUI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

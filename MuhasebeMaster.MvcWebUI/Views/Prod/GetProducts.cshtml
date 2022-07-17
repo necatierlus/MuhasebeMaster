@@ -1,0 +1,197 @@
+﻿@model MuhasebeMaster.MvcWebUI.Models.ProdViewModel
+@{
+    ViewData["Title"] = "GetProducts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <div class="dropdown pull-right">
+                <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
+                    <i class="zmdi zmdi-more-vert"></i>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#" data-toggle="modal" data-target="#product-adding-modal"> Yeni Ekle </a></li>
+                </ul>
+            </div>
+
+            <h4 class="header-title m-t-0 m-b-30">Ürünler</h4>
+
+            <div id="datatable-buttons_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                <table id="datatable-buttons" class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
+                    <thead>
+                        <tr role="row">
+                            <th class="sorting_asc" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 20px;">Marka</th>
+                            <th class="sorting_" tabindex="1" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Model: activate to sort column descending" style="width: 450px;">Model</th>
+                            <th class="sorting" tabindex="2" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-label="Quantity: activate to sort column ascending" style="width: 100px;">Adet</th>
+                            <th class="sorting" tabindex="3" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-label="AddedDate: activate to sort column ascending" style="width: 200px;">Tarih</th>
+                            <th rowspan="1" colspan="1" style="width: 50px; display: none" ;>&</th>
+                            <th rowspan="1" colspan="1" style="width: 50px; display: none" ;>&</th>
+                            <th rowspan="1" colspan="1" style="width: 50px; display: none" ;>&</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            @foreach (var product in Model.Products)
+                            {
+                                <tr role="row" class="odd">
+                                    <td class="sorting_1" tabindex="0">@product.Name</td>
+                                    <td>@product.Model</td>
+                                    <td>@product.Quantity</td>
+                                    <td>@product.AddedDate</td>
+                                    <td align="center"><button class="btn btn-purple" onclick="editProduct(@product.Id)">Güncelle</button></td>
+                                    <td align="center"><button class="btn btn-danger" onclick="deleteProduct(@product.Id)">Sil</button></td>
+                                    <td align="center"><a href="/Product/GetProductDetail/@product.Id" class="btn btn-info">Detay</a></td>
+                                </tr>
+                            }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div><!-- end col -->
+</div>
+<div id="product-adding-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <form asp-controller="Prod" asp-action="Add" method="post" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title"><i class="fa fa-plus-circle"></i>Ekle</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="field-1" class="control-label">Marka</label>
+                                <input asp-for="@Model.Product.Name" type="text" class="form-control" id="field-1" placeholder="e.g. Marka">
+                            </div>
+                            @*<div class="form-group">
+                                    <label for="field-2" class="control-label">CategoryId</label>
+                                    <select class="form-control" id="drpCategories" asp-for="@Model.Product.CategoryId" asp-items="@Model.Categories">
+                                        <option disabled selected value="-1">--Choose--</option>
+                                    </select>
+                                </div>*@
+                            <div class="form-group">
+                                <label for="field-2" class="control-label">Model</label>
+                                <input asp-for="@Model.Product.Model" type="text" class="form-control" id="field-1" placeholder="e.g. Model">
+                            </div>
+                            <div class="form-group">
+                                <label for="field-3" class="control-label">Miktar</label>
+                                <input asp-for="@Model.Product.Quantity" type="text" class="form-control" id="field-1" placeholder="e.g. Miktar">
+                            </div>
+                            <div class="form-group">
+                                <label for="field-4" class="control-label">Birim Ücret</label>
+                                <input asp-for="@Model.Product.UnitPrice" type="text" class="form-control" id="field-1" placeholder="e.g. Birim Ücret">
+                            </div>
+                            <div class="form-group">
+                                <label for="field-5" class="control-label">Açıklama</label>
+                                <textarea asp-for="@Model.Product.Description" type="text" class="form-control autogrow" id="field-1" placeholder="Açıklama" style="overflow:hidden;word-wrap:break-word; resize:horizontal; height:104px;"></textarea>
+                            </div>
+                            @*<div class="form-group">
+                                    <label for="field-6" class="control-label">Ürün Resim</label>
+                                    <input type="file" asp-items="@Model.FormFiles" name="formFiles" class="dropify" multiple data-show-upload="true" data-height="85" />
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">×</button>
+                    <button type="submit" class="btn btn-purple waves-effect waves-light">Kaydet</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div><!-- /.modal -->
+<div id="product-updating-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <form asp-controller="Prod" asp-action="Edit" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title"><i class="fa fa-plus-circle"></i> Düzenle</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input asp-for="@Model.Product.Id" id="productId" hidden />
+                            <div class="form-group">
+                                <label for="field-6" class="control-label">Marka</label>
+                                <input asp-for="@Model.Product.Name" type="text" class="form-control" id="Name" placeholder="e.g. Marka">
+                            </div>
+                            @*<div class="form-group">
+                                    <div class="form-group">
+                                        <label for="field-8" class="control-label">CategoryId</label>
+                                        <select class="form-control" id="drpCategoriesForUpdate" asp-for="@Model.Product.CategoryId" asp-items="@Model.Categories">
+                                            <option disabled selected value="-1">--Choose--</option>
+                                        </select>
+                                    </div>
+                                </div>*@
+                            <div class="form-group">
+                                <label for="field-7" class="control-label">Model</label>
+                                <input asp-for="@Model.Product.Model" type="text" class="form-control" id="Model" placeholder="e.g. Model">
+                            </div>
+                            <div class="form-group">
+                                <label for="field-8" class="control-label">Miktar</label>
+                                <input asp-for="@Model.Product.Quantity" type="text" class="form-control" id="Quantity" placeholder="e.g. Miktar">
+                            </div>
+                            <div class="form-group">
+                                <label for="field-9" class="control-label">Birim Ücret</label>
+                                <input asp-for="@Model.Product.UnitPrice" type="text" class="form-control" id="UnitPrice" placeholder="e.g. Birim Ücret">
+                            </div>
+                            <div class="form-group">
+                                <label for="field-10" class="control-label">Açıklama</label>
+                                <textarea asp-for="@Model.Product.Description" type="text" class="form-control autogrow" id="Description" placeholder="Açıklama" style="overflow:hidden;word-wrap:break-word; resize:horizontal; height:104px;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">×</button>
+                    <button type="submit" class="btn btn-purple waves-effect waves-light">Kaydet</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div><!-- /.modal -->
+
+<script type="text/javascript">
+    function editProduct(id) {
+        $.get("/Prod/Edit", { id: id })
+            .done(function (result) {
+                $('#productId').val(result.id);
+                $('#Name').val(result.name);
+                $('#Model').val(result.model);
+                $('#Quantity').val(result.quantity);
+                $('#UnitPrice').val(result.unitPrice);
+                $('#Description').val(result.description);
+/*                $('#drpCategoriesForUpdate').val(result.categoryId);*/
+                $('#product-updating-modal').modal('show');
+            })
+    }
+
+    function deleteProduct(id) {
+        swal({
+            title: "Silmek istediğinizden emin misiniz?",
+            text: "Silinen kayitlar bir daha listelenmez!",
+            type: "warning",
+            showCancelButton: true,
+            cancelButtonText: "Iptal",
+            confirmButtonClass: "btn-warning",
+            confirmButtonText: "Evet, silebilirsin!",
+            closeOnConfirm: false
+        },
+            function () {
+                $.get("/Prod/Delete/", { id: id })
+                    .done(function (result) {
+                        if (result == 0) {
+                            swal("Warning!", "Bir Hata Olustu!", "warning");
+                        }
+                        else {
+                            swal("Basarili!", "Isleminiz basarili bir sekilde gerceklestirildi!", "success");
+                            location.reload();
+                        }
+                    })
+            });
+    }
+</script>
+

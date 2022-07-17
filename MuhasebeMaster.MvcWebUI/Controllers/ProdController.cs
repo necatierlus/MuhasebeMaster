@@ -1,29 +1,37 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MuhasebeMaster.Business.Abstract;
 using MuhasebeMaster.Entity.Concrete;
+using MuhasebeMaster.MvcWebUI.Identity;
 using MuhasebeMaster.MvcWebUI.Models;
 using System;
+using System.Security.Claims;
 
 namespace MuhasebeMaster.MvcWebUI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class ProdController : Controller
     {
         IProdService _prodService;
         IHostingEnvironment _env;
+        private UserManager<AppIdentityUser> _userManager;
 
-        public ProdController(IProdService prodService, IHostingEnvironment env)
+        public ProdController(IProdService prodService, IHostingEnvironment env, UserManager<AppIdentityUser> userManager)
         {
             _prodService = prodService;
             _env = env;
+            _userManager = userManager;
         }
 
         public IActionResult GetProducts()
         {
-            var products = _prodService.GetProductWithDate();
-            return View(products);
+            var prodViewModel = new ProdViewModel
+            {
+                Products = _prodService.GetProductWithDate()
+             };
+            return View(prodViewModel);
         }
 
         public IActionResult GetProductDetail(Guid id)
@@ -42,6 +50,8 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
 
         public IActionResult Add(ProdViewModel productViewModel)
         {
+            //var userId = ((ClaimsIdentity)User.Identity).FindFirst("Id").Value; //current user info
+            //var user = await _userManager.FindByIdAsync(userId);
             if (ModelState.IsValid)
             {
                 var productIsValid = _prodService.GetByName(productViewModel.Product.Name);
@@ -51,14 +61,14 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
                 }
                 var productForAdd = new Prod
                 {
+                    Id = Guid.NewGuid(),
                     AddedDate = DateTime.Now,
-                    AddedBy = "Cihan Aybar",
-                    CategoryId = productViewModel.Product.CategoryId,
-                    Explanation = productViewModel.Product.Explanation,
-                    Height = productViewModel.Product.Height,
                     Name = productViewModel.Product.Name,
-                    Weight = productViewModel.Product.Weight,
-                    Width = productViewModel.Product.Width
+                    Model = productViewModel.Product.Model,
+                    Description = productViewModel.Product.Description,
+                    Quantity = productViewModel.Product.Quantity,
+                    UnitPrice = productViewModel.Product.UnitPrice,
+                    TotalPrice = productViewModel.Product.UnitPrice * Convert.ToDecimal(productViewModel.Product.Quantity)
                 };
                 try
                 {
@@ -97,15 +107,15 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
                 }
                 var productForUpdate = new Prod
                 {
-                    AddedBy = productIsValid.AddedBy, 
-                    AddedDate = productIsValid.AddedDate,
-                    CategoryId = productViewModel.Product.CategoryId,
-                    Explanation = productViewModel.Product.Explanation,
-                    Height = productViewModel.Product.Height,
                     Name = productViewModel.Product.Name,
-                    Weight = productViewModel.Product.Weight,
-                    Width = productViewModel.Product.Width,
-                    Id = productIsValid.Id
+                    Model = productViewModel.Product.Model,
+                    Description = productViewModel.Product.Description,
+                    Quantity = productViewModel.Product.Quantity,
+                    UnitPrice = productViewModel.Product.UnitPrice,
+                    TotalPrice = productViewModel.Product.UnitPrice * Convert.ToDecimal(productViewModel.Product.Quantity),
+                    AddedDate = productIsValid.AddedDate,
+                    Id = productIsValid.Id,
+                    ModifiedDate = DateTime.Now
                 };
                 try
                 {
@@ -144,7 +154,7 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
                 {
                     return Json(0);
                 }
-                productIsValid.IsActive = false;
+                //productIsValid.IsActive = false;
                 _prodService.Update(productIsValid);
                 return Json(1);
             }

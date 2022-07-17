@@ -11,7 +11,7 @@ namespace MuhasebeMaster.DataAccess.Concrete.EntityFrameworkCore.Mappings
     {
         public void Configure(EntityTypeBuilder<Prod> builder)
         {
-            builder.ToTable(@"Products", @"dbo");
+            builder.ToTable(@"Productts", @"dbo");
             builder.HasKey(d => d.Id);
 
             builder.Property(d => d.Name).HasColumnName("Name");

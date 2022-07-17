@@ -13,11 +13,11 @@ namespace MuhasebeMaster.DataAccess.Concrete.EntityFrameworkCore
 {
     public class EfProdDal : EfEntityRepositoryBase<Prod, MuhasebeMasterDbContext>, IProdDal
     {
-        public async Task<List<Prod>> GetProductByDate()
+        public List<Prod> GetProductByDate()
         {
             using (var _context = new MuhasebeMasterDbContext())
             {
-                var prod = await _context.Prods.OrderByDescending(x => x.AddedDate).ToListAsync();
+                var prod = _context.Prods.OrderByDescending(x => x.AddedDate).ToList();
                 return prod;
             }
         }
