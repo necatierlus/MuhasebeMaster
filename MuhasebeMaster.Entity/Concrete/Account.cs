@@ -16,6 +16,7 @@ namespace MuhasebeMaster.Entity.Concrete
         public string CostType { get; set; }
         public DateTime AddedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
+        public bool IsActive { get; set; }
 
     }
 }

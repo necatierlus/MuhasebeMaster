@@ -22,6 +22,7 @@ namespace MuhasebeMaster.DataAccess.Concrete.EntityFrameworkCore.Mappings
             builder.Property(d => d.CostType).HasColumnName("CostType");
             builder.Property(d => d.AddedDate).HasColumnName("AddedDate");
             builder.Property(d => d.ModifiedDate).HasColumnName("ModifiedDate");
+            builder.Property(d => d.IsActive).HasColumnName("IsActive");
         }
     }
 }
