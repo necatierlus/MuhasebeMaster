@@ -8,5 +8,8 @@ namespace MuhasebeMaster.DataAccess.Abstract
 {
     public interface IAccountDal : IEntityRepository<Account>
     {
+        List<Account> GetCustomersByDate();
+        List<Account> GetTenantsByDate();
+        List<Account> GetTrademenByDate();
     }
 }

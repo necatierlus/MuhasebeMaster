@@ -11,6 +11,7 @@ namespace MuhasebeMaster.Entity.Concrete
         public string Fullname { get; set; }
         public string Phone { get; set; }
         public string City { get; set; }
+        public string District { get; set; }
         public string Address { get; set; }
         public string AccountType { get; set; }
         public string CostType { get; set; }

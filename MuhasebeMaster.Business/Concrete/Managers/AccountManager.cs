@@ -35,9 +35,24 @@ namespace MuhasebeMaster.Business.Concrete.Managers
             return _accountDal.Get(d => d.Id == id);
         }
 
+        public List<Account> GetCustomersByDate()
+        {
+            return _accountDal.GetCustomersByDate();
+        }
+
         public List<Account> GetList()
         {
             return _accountDal.GetAll();
+        }
+
+        public List<Account> GetTenantsByDate()
+        {
+            return _accountDal.GetTenantsByDate();
+        }
+
+        public List<Account> GetTrademenByDate()
+        {
+            return _accountDal.GetTrademenByDate();
         }
 
         public Account Update(Account account)

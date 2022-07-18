@@ -15,5 +15,8 @@ namespace MuhasebeMaster.Business.Abstract
         void Delete(Account account);
         Account GetById(Guid id);
         List<Account> GetList();
+        List<Account> GetCustomersByDate();
+        List<Account> GetTenantsByDate();
+        List<Account> GetTrademenByDate();
     }
 }

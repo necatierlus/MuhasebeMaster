@@ -17,6 +17,7 @@ namespace MuhasebeMaster.DataAccess.Concrete.EntityFrameworkCore.Mappings
             builder.Property(d => d.Fullname).HasColumnName("Fullname");
             builder.Property(d => d.Phone).HasColumnName("Phone");
             builder.Property(d => d.City).HasColumnName("City");
+            builder.Property(d => d.District).HasColumnName("District");
             builder.Property(d => d.Address).HasColumnName("Address");
             builder.Property(d => d.AccountType).HasColumnName("AccountType");
             builder.Property(d => d.CostType).HasColumnName("CostType");
