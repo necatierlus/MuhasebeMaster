@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MuhasebeMaster.Business.Abstract;
+using MuhasebeMaster.Core.Constant;
 using MuhasebeMaster.Entity.Concrete;
 using MuhasebeMaster.MvcWebUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static MuhasebeMaster.Core.Constant.Enums;
 
 namespace MuhasebeMaster.MvcWebUI.Controllers
 {
@@ -20,15 +23,40 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
 
         public IActionResult GetCustomers()
         {
+            ViewBag.AccountTypes = Enum.GetValues(typeof(AccountType)).Cast<AccountType>().Select(v => new SelectListItem
+            {
+                Text = v.ToString(),
+                Value = ((int)v).ToString()
+            }).ToList();
+
+            ViewBag.CostTypes = Enum.GetValues(typeof(CostType)).Cast<CostType>().Select(v => new SelectListItem
+            {
+                Text = v.ToString(),
+                Value = ((int)v).ToString()
+            }).ToList();
+
             var accountViewModel = new AccountViewModel
             {
                 Accounts = _accountService.GetCustomersByDate()
             };
+
             return View(accountViewModel);
         }
 
         public IActionResult GetTenants()
         {
+            ViewBag.AccountTypes = Enum.GetValues(typeof(AccountType)).Cast<AccountType>().Select(v => new SelectListItem
+            {
+                Text = v.ToString(),
+                Value = ((int)v).ToString()
+            }).ToList();
+
+            ViewBag.CostTypes = Enum.GetValues(typeof(CostType)).Cast<CostType>().Select(v => new SelectListItem
+            {
+                Text = v.ToString(),
+                Value = ((int)v).ToString()
+            }).ToList();
+
             var accountViewModel = new AccountViewModel
             {
                 Accounts = _accountService.GetTenantsByDate()
@@ -38,6 +66,18 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
 
         public IActionResult GetTrademen()
         {
+            ViewBag.AccountTypes = Enum.GetValues(typeof(AccountType)).Cast<AccountType>().Select(v => new SelectListItem
+            {
+                Text = v.ToString(),
+                Value = ((int)v).ToString()
+            }).ToList();
+
+            ViewBag.CostTypes = Enum.GetValues(typeof(CostType)).Cast<CostType>().Select(v => new SelectListItem
+            {
+                Text = v.ToString(),
+                Value = ((int)v).ToString()
+            }).ToList();
+
             var accountViewModel = new AccountViewModel
             {
                 Accounts = _accountService.GetTrademenByDate()
@@ -68,6 +108,7 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
                 {
                     throw new Exception("Hesap mevcut!");
                 }
+
                 var accountForAdd = new Account
                 {
                     Id = Guid.NewGuid(),
@@ -121,6 +162,7 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
 
                 return Json(result);
             }
+
             return Json(0);
         }
 
