@@ -50,5 +50,15 @@ namespace MuhasebeMaster.Business.Concrete.Managers
         {
             return await _tillDal.UpdateAsync(till);
         }
+
+        public decimal GetTillTLBalance()
+        {
+            return _tillDal.GetTillTLBalance();
+        }
+
+        public decimal GetTillDollarBalance()
+        {
+            return _tillDal.GetTillDollarBalance();
+        }
     }
 }

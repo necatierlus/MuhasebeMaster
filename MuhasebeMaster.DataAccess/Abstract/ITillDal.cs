@@ -8,5 +8,7 @@ namespace MuhasebeMaster.DataAccess.Abstract
 {
     public interface ITillDal : IEntityRepository<Till>
     {
+        decimal GetTillTLBalance();
+        decimal GetTillDollarBalance();
     }
 }
