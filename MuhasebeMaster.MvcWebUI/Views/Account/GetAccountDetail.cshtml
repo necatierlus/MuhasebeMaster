@@ -4,5 +4,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>GetAccountDetail</h2>
+<h2>@Model.Account.Fullname</h2>
+
+<div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+        <p>@Model.Account.Phone</p>
+        <p>@Model.Account.City</p>
+        <p>@Model.Account.District</p>
+        <p>@Model.Account.Address</p>
+        <p>@Model.Account.AddedDate</p>
+        <p>@Model.Account.AccountType</p>
+        <p>@Model.Account.CostType</p>
+
+    </div>
+</div>
+
+
 
