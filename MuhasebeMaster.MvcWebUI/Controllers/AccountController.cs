@@ -15,10 +15,12 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
     public class AccountController : Controller
     {
         IAccountService _accountService;
+        ITransactionService _transactionService;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(IAccountService accountService, ITransactionService transactionService)
         {
             _accountService = accountService;
+            _transactionService =   transactionService;
         }
 
         public IActionResult GetCustomers()
@@ -229,5 +231,82 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
             }
             return Json(0);
         }
+
+        public IActionResult AddTransaction(AccountViewModel accountViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var transactionForAdd = new Transaction
+                {
+                    Id = Guid.NewGuid(),
+                    AddedDate = DateTime.Now,
+                    IsActive = true,
+                    Income = true
+
+                };
+                try
+                {
+                    var addedAccount = _transactionService.Add(transactionForAdd);
+                    if (accountViewModel.Account.AccountType == "Customer")
+                    {
+                        return RedirectToAction("GetCustomers");
+                    }
+                    if (accountViewModel.Account.AccountType == "Tenant")
+                    {
+                        return RedirectToAction("GetTenants");
+                    }
+                    if (accountViewModel.Account.AccountType == "Trademen")
+                    {
+                        return RedirectToAction("GetTrademen");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Bir hata oluştu!");
+                }
+            }
+            if (accountViewModel.Account.AccountType == "Tenant")
+            {
+                return RedirectToAction("GetTenants");
+            }
+            if (accountViewModel.Account.AccountType == "Trademen")
+            {
+                return RedirectToAction("GetTrademen");
+            }
+            return RedirectToAction("GetCustomers");
+        }
+
+        public JsonResult GetTransactions(Guid id)
+        {
+            if (id != null)
+            {
+                var accountIsValid = _accountService.GetById(id);
+                if (accountIsValid == null)
+                {
+                    return Json(0);
+                }
+                accountIsValid.IsActive = false; //soft delete
+                _accountService.Update(accountIsValid);
+                return Json(1);
+            }
+            return Json(0);
+        }
+
+        public JsonResult DeleteTransaction(Guid id)
+        {
+            if (id != null)
+            {
+                var accountIsValid = _accountService.GetById(id);
+                if (accountIsValid == null)
+                {
+                    return Json(0);
+                }
+                accountIsValid.IsActive = false; //soft delete
+                _accountService.Update(accountIsValid);
+                return Json(1);
+            }
+            return Json(0);
+        }
+
     }
 }

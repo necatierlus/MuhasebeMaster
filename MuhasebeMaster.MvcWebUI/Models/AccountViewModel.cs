@@ -10,5 +10,6 @@ namespace MuhasebeMaster.MvcWebUI.Models
         public List<Account> Accounts { get; set; }
         public List<SelectListItem> AccountTypes { get; set; }
         public List<SelectListItem> CostTypes { get; set; }
+        public Transaction Transaction { get; set; }
     }
 }

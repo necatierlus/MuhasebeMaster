@@ -18,6 +18,134 @@
 
     </div>
 </div>
+<div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+        <h4 class="header-title m-t-0 m-b-30">İşlemler</h4>
+        <table>
+            <tr>
+                <td>
+                    <a href="/accounts/AddTransaction" class="btn btn-default">Yeni İşlem Ekle</a>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <form id="formVardiyaSil">
+            <table>
+                <tr>
+                    <td>
+                        <input type="button" class="btn btn-default" value="Sil" id="cancelButton" />
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <div id="UpdatePanel"></div>
+        </form>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            // This is for Get All Data
+            $(window).load(function () {
+                getTrans();
+            });
+
+            function getTrans() {
+                $.ajax({
+                    url: "/accounts/GetTransactions/",
+                    data: "",
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        loadData(data);
+                    },
+                    error: function () {
+                        alert("Failed! Bir hata oluştu.");
+                    }
+                });
+            }
+
+            function loadData(data) {
+                // Here we will format & load/show data
+                var tab = $('<table id="datatable-buttons" class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info"></table>');
+                var thead = $('<thead></thead>');
+                thead.append('<th>İşlem</th>');
+                thead.append('<th>Ürün</th>');
+                thead.append('<th>Miktar</th>');
+                thead.append('<th>Tutar</th>');
+                thead.append('<th>Açıklama</th>');
+                thead.append('<th>İşlem Tarihi</th>');
+
+                tab.append(thead);
+                $.each(data, function (i, val) {
+                    //date format for mysql db datetime value
+                    var dateFormatted1 = new Date(parseInt(val.added_date.substr(6))).toDateString();
+                    // Append database data here
+                    var trow = $('<tr></tr>');
+                    trow.append('<input class="radio1" style="cursor:pointer;-ms-transform: scale(1.2);-webkit-transform: scale(1.2);transform: scale(1.2);" type="radio" name="vardId"  value=" ' + val.id + ' "/>');
+                    trow.append('<td>' + val.product + '</td>');
+                    trow.append('<td>' + val.quantity + '</td>');
+                    trow.append('<td>' + val.price + '</td>');
+                    trow.append('<td>' + val.description + '</td>');
+                    trow.append('<td>' + $.date(dateFormatted1) + '</td>');
+                    tab.append(trow);
+                });
+                $("tr:odd", tab).css('background-color', '#C4C4C4');
+                $("#UpdatePanel").html(tab);
+            };
+
+            //here is we'll format date
+            $.date = function (dateObject) {
+                var d = new Date(dateObject);
+                var day = d.getDate();
+                var month = d.getMonth() + 1;
+                var year = d.getFullYear();
+                if (day < 10) {
+                    day = "0" + day;
+                }
+                if (month < 10) {
+                    month = "0" + month;
+                }
+                var date = day + "/" + month + "/" + year;
+
+                return date;
+            };
+
+            $('#cancelButton').hide();
+
+            $(document).on('click', '.radio1', function () {
+                $('#cancelButton').show();
+            });
+
+            $("#cancelButton").click(function () {
+                var data = $("#formVardiyaSil").serialize();
+
+                $.ajax({
+                    url: "/accounts/DeleteTransaction",
+                    data: data,
+                    type: "POST",
+                    success: function (response) {
+                        alert("Succesful! Başarıyla Silindi!");
+                        getTrans() 
+                        $('#cancelButton').hide();
+                        //window.location.href = '/sozlesmeler';
+                    },
+                    error: function () {
+                        //alert("Failed! Bir Hata Oluştu!");
+                        getTrans() 
+                        $('#cancelButton').hide();
+                    }
+
+                });
+            });
+
+        });
+
+    </script>
+
+
+}
 
 
 
