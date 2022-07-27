@@ -16,11 +16,13 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
     {
         IAccountService _accountService;
         ITransactionService _transactionService;
+        IProdService _prodService;
 
-        public AccountController(IAccountService accountService, ITransactionService transactionService)
+        public AccountController(IAccountService accountService, ITransactionService transactionService, IProdService prodService)
         {
             _accountService = accountService;
-            _transactionService =   transactionService;
+            _transactionService = transactionService;
+            _prodService = prodService;
         }
 
         public IActionResult GetCustomers()
@@ -236,42 +238,30 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
         {
             if (ModelState.IsValid)
             {
+                var account = _accountService.GetById(accountViewModel.Account.Id);
+                var prod = _prodService.GetById(accountViewModel.Account.Id);   
+
                 var transactionForAdd = new Transaction
                 {
                     Id = Guid.NewGuid(),
+                    AccountId = account.Id,
+                    ProductId = prod.Id, 
+                    Text = accountViewModel.Transaction.Text,
+                    Quantity = accountViewModel.Transaction.Quantity,
+                    Price = accountViewModel.Transaction.Price.ToString().Contains("-")  ? -accountViewModel.Transaction.Price : accountViewModel.Transaction.Price,
+                    Description = accountViewModel.Transaction.Description,
                     AddedDate = DateTime.Now,
                     IsActive = true,
-                    Income = true
-
+                    Income = accountViewModel.Transaction.Price.ToString().Contains("-") ? false : true
                 };
                 try
                 {
                     var addedAccount = _transactionService.Add(transactionForAdd);
-                    if (accountViewModel.Account.AccountType == "Customer")
-                    {
-                        return RedirectToAction("GetCustomers");
-                    }
-                    if (accountViewModel.Account.AccountType == "Tenant")
-                    {
-                        return RedirectToAction("GetTenants");
-                    }
-                    if (accountViewModel.Account.AccountType == "Trademen")
-                    {
-                        return RedirectToAction("GetTrademen");
-                    }
                 }
                 catch (Exception ex)
                 {
                     throw new Exception("Bir hata oluştu!");
                 }
-            }
-            if (accountViewModel.Account.AccountType == "Tenant")
-            {
-                return RedirectToAction("GetTenants");
-            }
-            if (accountViewModel.Account.AccountType == "Trademen")
-            {
-                return RedirectToAction("GetTrademen");
             }
             return RedirectToAction("GetCustomers");
         }
