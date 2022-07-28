@@ -15,5 +15,6 @@ namespace MuhasebeMaster.Business.Abstract
         void Delete(Transaction transaction);
         Transaction GetById(Guid id);
         List<Transaction> GetList();
+        dynamic GetTransactionsByAccount(Guid id);
     }
 }

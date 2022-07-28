@@ -10,5 +10,6 @@ namespace MuhasebeMaster.DataAccess.Abstract
     {
         decimal GetTillTLBalance();
         decimal GetTillDollarBalance();
+        Till GetByTransaction(Guid id);
     }
 }

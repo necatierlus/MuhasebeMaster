@@ -60,5 +60,10 @@ namespace MuhasebeMaster.Business.Concrete.Managers
         {
             return _tillDal.GetTillDollarBalance();
         }
+
+        public Till GetByTransaction(Guid id)
+        {
+            return _tillDal.GetByTransaction(id);
+        }
     }
 }
