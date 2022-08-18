@@ -68,7 +68,8 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
                     Description = productViewModel.Product.Description,
                     Quantity = productViewModel.Product.Quantity,
                     UnitPrice = productViewModel.Product.UnitPrice,
-                    TotalPrice = productViewModel.Product.UnitPrice * Convert.ToDecimal(productViewModel.Product.Quantity)
+                    TotalPrice = productViewModel.Product.UnitPrice * Convert.ToDecimal(productViewModel.Product.Quantity),
+                    ModifiedDate = DateTime.Now
                 };
                 try
                 {

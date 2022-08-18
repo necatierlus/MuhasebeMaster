@@ -39,9 +39,9 @@
                                     <td>@product.Model</td>
                                     <td>@product.Quantity</td>
                                     <td>@product.AddedDate</td>
-                                    <td align="center"><button class="btn btn-purple" onclick="editProduct(@product.Id)">Güncelle</button></td>
-                                    <td align="center"><button class="btn btn-danger" onclick="deleteProduct(@product.Id)">Sil</button></td>
-                                    <td align="center"><a href="/Product/GetProductDetail/@product.Id" class="btn btn-info">Detay</a></td>
+                                    <td align="center"><button class="btn btn-purple" onclick="editProduct('@product.Id')">Güncelle</button></td>
+                                    <td align="center"><button class="btn btn-danger" onclick="deleteProduct('@product.Id')">Sil</button></td>
+                                    <td align="center"><a href="/Prod/GetProductDetail/@product.Id" class="btn btn-info">Detay</a></td>
                                 </tr>
                             }
                     </tbody>
@@ -116,7 +116,7 @@
                             <input asp-for="@Model.Product.Id" id="productId" hidden />
                             <div class="form-group">
                                 <label for="field-6" class="control-label">Marka</label>
-                                <input asp-for="@Model.Product.Name" type="text" class="form-control" id="Name" placeholder="e.g. Marka">
+                                <input asp-for="@Model.Product.Name" type="text" class="form-control" id="name" placeholder="e.g. Marka">
                             </div>
                             @*<div class="form-group">
                                     <div class="form-group">
@@ -128,19 +128,19 @@
                                 </div>*@
                             <div class="form-group">
                                 <label for="field-7" class="control-label">Model</label>
-                                <input asp-for="@Model.Product.Model" type="text" class="form-control" id="Model" placeholder="e.g. Model">
+                                <input asp-for="@Model.Product.Model" type="text" class="form-control" id="model" placeholder="e.g. Model">
                             </div>
                             <div class="form-group">
                                 <label for="field-8" class="control-label">Miktar</label>
-                                <input asp-for="@Model.Product.Quantity" type="text" class="form-control" id="Quantity" placeholder="e.g. Miktar">
+                                <input asp-for="@Model.Product.Quantity" type="text" class="form-control" id="quantity" placeholder="e.g. Miktar">
                             </div>
                             <div class="form-group">
                                 <label for="field-9" class="control-label">Birim Ücret</label>
-                                <input asp-for="@Model.Product.UnitPrice" type="text" class="form-control" id="UnitPrice" placeholder="e.g. Birim Ücret">
+                                <input asp-for="@Model.Product.UnitPrice" type="text" class="form-control" id="unitprice" placeholder="e.g. Birim Ücret">
                             </div>
                             <div class="form-group">
                                 <label for="field-10" class="control-label">Açıklama</label>
-                                <textarea asp-for="@Model.Product.Description" type="text" class="form-control autogrow" id="Description" placeholder="Açıklama" style="overflow:hidden;word-wrap:break-word; resize:horizontal; height:104px;"></textarea>
+                                <textarea asp-for="@Model.Product.Description" type="text" class="form-control autogrow" id="desc" placeholder="Açıklama" style="overflow:hidden;word-wrap:break-word; resize:horizontal; height:104px;"></textarea>
                             </div>
                         </div>
                     </div>
@@ -158,12 +158,13 @@
     function editProduct(id) {
         $.get("/Prod/Edit", { id: id })
             .done(function (result) {
+                debugger;
                 $('#productId').val(result.id);
-                $('#Name').val(result.name);
-                $('#Model').val(result.model);
-                $('#Quantity').val(result.quantity);
-                $('#UnitPrice').val(result.unitPrice);
-                $('#Description').val(result.description);
+                $('#name').val(result.name);
+                $('#model').val(result.model);
+                $('#quantity').val(result.quantity);
+                $('#unitprice').val(result.unitPrice);
+                $('#desc').val(result.description);
 /*                $('#drpCategoriesForUpdate').val(result.categoryId);*/
                 $('#product-updating-modal').modal('show');
             })
