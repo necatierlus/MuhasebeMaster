@@ -8,5 +8,7 @@ namespace MuhasebeMaster.DataAccess.Abstract
 {
     public interface ITransactionDal : IEntityRepository<Transaction>
     {
+        //List<Transaction> GetTransactionsByAccount(Guid id);
+        dynamic GetTransactionsByAccount(Guid id);
     }
 }

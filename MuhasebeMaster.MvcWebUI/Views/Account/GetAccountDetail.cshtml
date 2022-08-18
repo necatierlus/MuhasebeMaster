@@ -15,9 +15,277 @@
         <p>@Model.Account.AddedDate</p>
         <p>@Model.Account.AccountType</p>
         <p>@Model.Account.CostType</p>
-
+        <p>
+            @if (ViewBag.Dolar != 0)
+            {
+                <text>Bakiye :</text> @ViewBag.Dolar <text>$</text>
+            }
+            @if (ViewBag.TL != 0)
+            {
+                <text>Bakiye :</text> @ViewBag.TL <text>TL</text>
+            }
+        </p>
     </div>
 </div>
+<div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+        <h4 class="header-title m-t-0 m-b-30">İşlemler</h4>
+        <table>
+            <tr>
+                <td>
+                    <a href="#" data-toggle="modal" data-target="#product-adding-modal" class="btn btn-default">Yeni İşlem Ekle</a>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <form id="formVardiyaSil">
+            <table>
+                <tr>
+                    <td>
+                        <input type="button" class="btn btn-default" value="Sil" id="cancelButton" onclick="deleteTran(@Model.Transaction.Id)"/>
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <div id="UpdatePanel"></div>
+        </form>
+    </div>
+</div>
+<div id="product-adding-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <form asp-controller="Account" asp-action="AddTransaction" method="post" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title"><i class="fa fa-plus-circle"></i>Ekle</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input asp-for="@Model.Account.Id" id="accountId" hidden />
+                            <div class="form-group">
+                                <label for="field-1" class="control-label">Ürün</label>
+                                <select class="form-control" id="drpAccountTypes" asp-for="@Model.Account.AccountType" asp-items="@ViewBag.AccountTypes">
+                                    <option disabled selected value="-1">--Choose--</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-2" class="control-label">Miktar</label>
+                                <input asp-for="@Model.Transaction.Quantity" type="text" class="form-control" id="field-1" placeholder="e.g. Miktar">
+                            </div>
+                            <div class="form-group">
+                                <label for="field-3" class="control-label">Tutar</label>
+                                <input asp-for="@Model.Transaction.Price" type="text" class="form-control" id="field-1" placeholder="e.g. Tutar">
+                            </div>
+                            <div class="form-group">
+                                <label for="field-4" class="control-label">Açıklama</label>
+                                <input asp-for="@Model.Transaction.Description" type="text" class="form-control" id="field-1" placeholder="e.g. Açıklama">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">×</button>
+                    <button type="submit" class="btn btn-purple waves-effect waves-light">Kaydet</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div><!-- /.modal -->
+
+<div id="product-updating-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <form asp-controller="Account" asp-action="EditTransaction" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title"><i class="fa fa-plus-circle"></i> Düzenle</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input asp-for="@Model.Account.Id" id="accountId" hidden />
+                            <input asp-for="@Model.Account.Id" id="accountId" hidden />
+                            <div class="form-group">
+                                <label for="field-1" class="control-label">Ürün</label>
+                                <select class="form-control" id="drpAccountTypes" asp-for="@Model.Account.AccountType" asp-items="@ViewBag.AccountTypes">
+                                    <option disabled selected value="-1">--Choose--</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-2" class="control-label">Miktar</label>
+                                <input asp-for="@Model.Transaction.Quantity" type="text" class="form-control" id="Quantity" placeholder="e.g. Miktar">
+                            </div>
+                            <div class="form-group">
+                                <label for="field-3" class="control-label">Tutar</label>
+                                <input asp-for="@Model.Transaction.Price" type="text" class="form-control" id="Price" placeholder="e.g. Tutar">
+                            </div>
+                            <div class="form-group">
+                                <label for="field-4" class="control-label">Açıklama</label>
+                                <input asp-for="@Model.Transaction.Description" type="text" class="form-control" id="Description" placeholder="e.g. Açıklama">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">×</button>
+                    <button type="submit" class="btn btn-purple waves-effect waves-light">Kaydet</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div><!-- /.modal -->
+@section scripts{
+    <script>
+        $(document).ready(function() {
+
+            // This is for Get All Data
+            $(window).load(function() {
+                getTrans();
+            });
+
+            function getTrans() {
+                $.ajax({
+                    url: "/accounts/GetTransactions/",
+                    data: "",
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        loadData(data);
+                    },
+                    error: function() {
+                        alert("Failed! Bir hata oluştu.");
+                    }
+                });
+            }
+
+            function loadData(data) {
+                // Here we will format & load/show data
+                var tab = $('<table id="datatable-buttons" class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info"></table>');
+                var thead = $('<thead></thead>');
+                thead.append('<th>İşlem</th>');
+                thead.append('<th>Ürün</th>');
+                thead.append('<th>Miktar</th>');
+                thead.append('<th>Tutar</th>');
+                thead.append('<th>Açıklama</th>');
+                thead.append('<th>İşlem Tarihi</th>');
+                thead.append('<th>İşlem</th>');
+
+                tab.append(thead);
+                $.each(data, function(i, val) {
+                    //date format for mysql db datetime value
+                    var dateFormatted1 = new Date(parseInt(val.added_date.substr(6))).toDateString();
+                    // Append database data here
+                    var trow = $('<tr></tr>');
+                    trow.append('<input class="radio1" style="cursor:pointer;-ms-transform: scale(1.2);-webkit-transform: scale(1.2);transform: scale(1.2);" type="radio" name="vardId"  value=" ' + val.id + ' "/>');
+                    trow.append('<td>' + val.product + '</td>');
+                    trow.append('<td>' + val.quantity + '</td>');
+                    trow.append('<td>' + val.price + '</td>');
+                    trow.append('<td>' + val.description + '</td>');
+                    trow.append('<td>' + $.date(dateFormatted1) + '</td>');
+                    trow.append('<button id="editBtn" class="btn btn-purple" onclick="editTran(' + val.Id + ')">Güncelle</button>');
+                    tab.append(trow);
+                });
+                $("tr:odd", tab).css('background-color', '#C4C4C4');
+                $("#UpdatePanel").html(tab);
+            };
+
+            //here is we'll format date
+            $.date = function(dateObject) {
+                var d = new Date(dateObject);
+                var day = d.getDate();
+                var month = d.getMonth() + 1;
+                var year = d.getFullYear();
+                if (day < 10) {
+                    day = "0" + day;
+                }
+                if (month < 10) {
+                    month = "0" + month;
+                }
+                var date = day + "/" + month + "/" + year;
+
+                return date;
+            };
+
+            $('#cancelButton').hide();
+            $('#editBtn').hide();
+
+            $(document).on('click', '.radio1', function() {
+                $('#cancelButton').show();
+                $('#editBtn').show();
+            });
+
+            $("#cancelButton").click(function() {
+                var data = $("#formVardiyaSil").serialize();
+
+                $.ajax({
+                    url: "/Account/DeleteTransaction",
+                    data: data,
+                    type: "POST",
+                    success: function(response) {
+                        alert("Successful! Başarıyla Silindi!");
+                        getTrans();
+                        $('#cancelButton').hide();
+                        //window.location.href = '/sozlesmeler';
+                    },
+                    error: function() {
+                        //alert("Failed! Bir Hata Oluştu!");
+                        getTrans()
+                        $('#cancelButton').hide();
+                    }
+
+                });
+            });
+
+
+            function editTran(id) {
+                $.get("/Account/EditTransaction", { id: id })
+                    .done(function(result) {
+                        $('#accountId').val(result.id);
+                        $('#transactionId').val(result.id);
+                        $('#Quantity').val(result.quantity);
+                        $('#Price').val(result.price);
+                        $('#Description').val(result.discription);
+                        $('#drpAccountTypes').val(result.accountType);
+                        $('#drpCostTypes').val(result.costType);
+                        $('#product-updating-modal').modal('show');
+                        $('#editBtn').hide();
+                    })
+            }
+
+            function deleteTran(id) {
+                swal({
+                    title: "Silmek istediğinizden emin misiniz?",
+                    text: "Silinen kayitlar bir daha listelenmez!",
+                    type: "warning",
+                    showCancelButton: true,
+                    cancelButtonText: "Iptal",
+                    confirmButtonClass: "btn-warning",
+                    confirmButtonText: "Evet, silebilirsin!",
+                    closeOnConfirm: false
+                },
+                    function() {
+                        $.get("/Account/DeleteTransaction/", { id: id })
+                            .done(function(result) {
+                                if (result == 0) {
+                                    swal("Warning!", "Bir Hata Olustu!", "warning");
+                                }
+                                else {
+                                    swal("Basarili!", "Isleminiz basarili bir sekilde gerceklestirildi!", "success");
+                                    $('#cancelButton').hide();
+                                    getTrans();
+                                    location.reload();
+                                }
+                            })
+                    });
+            }
+
+        });
+
+    </script>
+
+
+}
 
 
 

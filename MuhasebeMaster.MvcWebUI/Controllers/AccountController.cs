@@ -15,10 +15,16 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
     public class AccountController : Controller
     {
         IAccountService _accountService;
+        ITransactionService _transactionService;
+        IProdService _prodService;
+        ITillService _tillService;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(IAccountService accountService, ITransactionService transactionService, IProdService prodService, ITillService tillService)
         {
             _accountService = accountService;
+            _transactionService = transactionService;
+            _prodService = prodService;
+            _tillService = tillService;
         }
 
         public IActionResult GetCustomers()
@@ -90,9 +96,11 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
             if (id != null)
             {
                 var accounts = _accountService.GetById(id);
+                var trans = _transactionService.GetTransactionsByAccount(id);
                 var accountViewModel = new AccountViewModel
                 {
-                    Account = accounts
+                    Account = accounts,
+                    Transactions = trans
                 };
                 return View(accountViewModel);
             }
@@ -229,5 +237,132 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
             }
             return Json(0);
         }
+
+        public IActionResult AddTransaction(AccountViewModel accountViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var account = _accountService.GetById(accountViewModel.Account.Id);
+                var prod = _prodService.GetById(accountViewModel.Account.Id);   
+
+                var transactionForAdd = new Transaction
+                {
+                    Id = Guid.NewGuid(),
+                    AccountId = account.Id,
+                    ProductId = prod.Id, 
+                    Text = null,
+                    Quantity = accountViewModel.Transaction.Quantity,
+                    Price = accountViewModel.Transaction.Price.ToString().Contains("-")  ? -accountViewModel.Transaction.Price : accountViewModel.Transaction.Price,
+                    Description = accountViewModel.Transaction.Description,
+                    AddedDate = DateTime.Now,
+                    IsActive = true,
+                    Income = accountViewModel.Transaction.Price.ToString().Contains("-") ? true : false
+                };
+                try
+                {
+                    var addedAccount = _transactionService.Add(transactionForAdd);
+                    Guid id = addedAccount.Id;
+                    var till = new Till
+                    {
+                        Id = Guid.NewGuid(),
+                        AddedDate =  DateTime.Now,
+                        TransactionId = id,
+                        AccountId = account.Id,
+                        PaymentId = Guid.Empty,
+                        Price = accountViewModel.Transaction.Price.ToString().Contains("-") ? -accountViewModel.Transaction.Price : accountViewModel.Transaction.Price,
+                        CostType = account.CostType,
+                        IsTill = false,
+                        IsActive = true
+                    };
+                    _tillService.Add(till);
+                    return Redirect("/Account/GetAccountDetail/" + accountViewModel.Account.Id);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Bir hata oluştu!");
+                }
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult EditTransaction(AccountViewModel accountViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var account = _accountService.GetById(accountViewModel.Account.Id);
+                var transaction = _transactionService.GetById(accountViewModel.Transaction.Id);
+                if (transaction == null)
+                {
+                    throw new Exception("An error occured!");
+                }
+                var transactionForUpdate = new Transaction
+                {
+                    Id = transaction.Id,
+                    AccountId = transaction.AccountId,
+                    ProductId = accountViewModel.Transaction.ProductId,
+                    Text = null,
+                    Quantity = accountViewModel.Transaction.Quantity,
+                    Price = accountViewModel.Transaction.Price.ToString().Contains("-") ? -accountViewModel.Transaction.Price : accountViewModel.Transaction.Price,
+                    Description = accountViewModel.Transaction.Description,
+                    AddedDate = transaction.AddedDate,
+                    IsActive = transaction.IsActive,
+                    Income = accountViewModel.Transaction.Price.ToString().Contains("-") ? true : false
+                };
+                try
+                {
+                    _transactionService.Update(transactionForUpdate);
+                    var tillById = _tillService.GetByTransaction(transaction.Id);
+                    var till = new Till
+                    {
+                        Id = tillById.Id,
+                        AddedDate = tillById.AddedDate,
+                        TransactionId = tillById.Id,
+                        AccountId = tillById.AccountId,
+                        PaymentId = tillById.PaymentId,
+                        Price = accountViewModel.Transaction.Price.ToString().Contains("-") ? -accountViewModel.Transaction.Price : accountViewModel.Transaction.Price,
+                        CostType = tillById.CostType,
+                        IsTill = tillById.IsTill,
+                        IsActive = tillById.IsActive
+                    };
+                    _tillService.Update(till);
+                    return Redirect("/Account/GetAccountDetail/" + accountViewModel.Account.Id);
+                }
+                catch (Exception)
+                {
+                    throw new Exception("An error occured!");
+                }
+            }
+            return View();
+        }
+
+        public JsonResult GetTransactions()
+        {
+            //var trans = _transactionService.GetTransactionsByAccount(id);
+            //var all = from p in _conte 
+
+            return Json(0);
+        }
+
+
+        public JsonResult DeleteTransaction(Guid id)
+        {
+            if (id != null)
+            {
+                var transaction = _transactionService.GetById(id);
+                if (transaction == null)
+                {
+                    return Json(0);
+                }
+                transaction.IsActive = false; //soft delete
+                _transactionService.Update(transaction);
+                var tillById = _tillService.GetByTransaction(transaction.Id);
+                tillById.IsActive = false;
+                _tillService.Update(tillById);
+                return Json(1);
+            }
+            return Json(0);
+        }
+
     }
 }

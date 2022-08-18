@@ -17,5 +17,6 @@ namespace MuhasebeMaster.Business.Abstract
         List<Till> GetList();
         decimal GetTillTLBalance();
         decimal GetTillDollarBalance();
+        Till GetByTransaction(Guid id);
     }
 }

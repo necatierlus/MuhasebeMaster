@@ -50,5 +50,10 @@ namespace MuhasebeMaster.Business.Concrete.Managers
         {
             return await _transactionDal.UpdateAsync(transaction);
         }
+
+        public dynamic GetTransactionsByAccount(Guid id)
+        {
+            return _transactionDal.GetTransactionsByAccount(id);
+        }
     }
 }

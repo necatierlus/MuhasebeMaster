@@ -7,6 +7,7 @@ namespace MuhasebeMaster.Entity.Concrete
 {
     public class Transaction : IEntity
     {
+
         public Guid Id { get; set; }
         public Guid AccountId { get; set; }
         public Guid ProductId { get; set; }

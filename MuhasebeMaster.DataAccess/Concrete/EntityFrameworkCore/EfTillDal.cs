@@ -27,5 +27,14 @@ namespace MuhasebeMaster.DataAccess.Concrete.EntityFrameworkCore
                 return total;
             }
         }
+
+        public Till GetByTransaction(Guid id)
+        {
+            using (var _context = new MuhasebeMasterDbContext())
+            {
+                var total = _context.Tills.Where(x => x.TransactionId == id).FirstOrDefault();
+                return total;
+            }
+        }
     }
 }
