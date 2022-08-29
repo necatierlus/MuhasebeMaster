@@ -11,5 +11,7 @@ namespace MuhasebeMaster.DataAccess.Abstract
         List<Account> GetCustomersByDate();
         List<Account> GetTenantsByDate();
         List<Account> GetTrademenByDate();
+        List<Prod> GetProductsByModelNo();
+        decimal GetBalance(Guid id);
     }
 }

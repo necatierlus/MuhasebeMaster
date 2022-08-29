@@ -35,6 +35,8 @@ namespace MuhasebeMaster.MvcWebUI
         {
             services.AddMvcCore().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
+            services.AddSession();
+
             services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration["dbConnection"]));
 
             services.AddIdentity<AppIdentityUser, AppIdentityRole>()
@@ -131,6 +133,8 @@ namespace MuhasebeMaster.MvcWebUI
 
             app.UseAuthentication();
             app.UseCookiePolicy();
+
+            app.UseSession();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

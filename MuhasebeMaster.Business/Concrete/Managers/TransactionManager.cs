@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using MuhasebeMaster.Entity.Concrete;
+using MuhasebeMaster.DataAccess.Concrete;
 
 namespace MuhasebeMaster.Business.Concrete.Managers
 {
@@ -51,9 +52,9 @@ namespace MuhasebeMaster.Business.Concrete.Managers
             return await _transactionDal.UpdateAsync(transaction);
         }
 
-        public dynamic GetTransactionsByAccount(Guid id)
+        public async Task<List<TransactionModel>> GetTransactionsByAccount(Guid id)
         {
-            return _transactionDal.GetTransactionsByAccount(id);
+            return await _transactionDal.GetTransactionsByAccount(id);
         }
     }
 }

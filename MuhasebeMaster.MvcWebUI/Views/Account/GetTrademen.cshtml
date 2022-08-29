@@ -41,8 +41,8 @@
                                 <td>@item.City</td>
                                 <td>@item.District</td>
                                 <td>@item.AddedDate</td>
-                                <td align="center"><button class="btn btn-purple" onclick="editProduct(@item.Id)">Güncelle</button></td>
-                                <td align="center"><button class="btn btn-danger" onclick="deleteProduct(@item.Id)">Sil</button></td>
+                                <td align="center"><button class="btn btn-purple" onclick="editProduct('@item.Id')">Güncelle</button></td>
+                                <td align="center"><button class="btn btn-danger" onclick="deleteProduct('@item.Id')">Sil</button></td>
                                 <td align="center"><a href="/Account/GetAccountDetail/@item.Id" class="btn btn-info">Detay</a></td>
                             </tr>
                         }
@@ -54,7 +54,7 @@
 </div>
 <div id="product-adding-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
-        <form asp-controller="Prod" asp-action="Add" method="post" enctype="multipart/form-data">
+        <form asp-controller="Account" asp-action="Add" method="post" enctype="multipart/form-data">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -108,7 +108,7 @@
 </div><!-- /.modal -->
 <div id="product-updating-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
-        <form asp-controller="Prod" asp-action="Edit" method="post">
+        <form asp-controller="Account" asp-action="Edit" method="post">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -138,7 +138,7 @@
                                 <label for="field-12" class="control-label">Adres</label>
                                 <textarea asp-for="@Model.Account.Address" type="text" class="form-control autogrow" id="Address" placeholder="Adres" style="overflow:hidden;word-wrap:break-word; resize:horizontal; height:104px;"></textarea>
                             </div>
-                             <div class="form-group">
+                             @*<div class="form-group">
                                     <label for="field-13" class="control-label">Hesap Türü</label>
                                     <select class="form-control" id="drpAccountTypes" asp-for="@Model.Account.AccountType" asp-items="@ViewBag.AccountTypes">
                                         <option disabled selected value="-1">--Choose--</option>
@@ -149,7 +149,7 @@
                                     <select class="form-control" id="drpCostTypes" asp-for="@Model.Account.CostType" asp-items="@ViewBag.CostTypes">
                                         <option disabled selected value="-1">--Choose--</option>
                                     </select>
-                               </div>
+                               </div>*@
                         </div>
                     </div>
                 </div>
@@ -172,8 +172,8 @@
                 $('#City').val(result.city);
                 $('#District').val(result.district);
                 $('#Address').val(result.address);
-                $('#drpAccountTypes').val(result.accountType);
-                $('#drpCostTypes').val(result.costType);
+                //$('#drpAccountTypes').val(result.accountType);
+                //$('#drpCostTypes').val(result.costType);
                 $('#product-updating-modal').modal('show');
             })
     }

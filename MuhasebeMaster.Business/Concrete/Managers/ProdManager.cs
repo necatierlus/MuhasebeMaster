@@ -47,7 +47,7 @@ namespace MuhasebeMaster.Business.Concrete.Managers
 
         public Prod GetByName(string name)
         {
-            return _prodDal.Get(d => d.Name == name);
+            return _prodDal.Get(d => d.Model == name);
         }
 
         public Prod Update(Prod prod)

@@ -55,6 +55,11 @@ namespace MuhasebeMaster.Business.Concrete.Managers
             return _accountDal.GetTrademenByDate();
         }
 
+        public List<Prod> GetProductsByModelNo()
+        {
+            return _accountDal.GetProductsByModelNo();
+        }
+
         public Account Update(Account account)
         {
             return _accountDal.Update(account);
@@ -63,6 +68,11 @@ namespace MuhasebeMaster.Business.Concrete.Managers
         public async Task<Account> UpdateAsync(Account account)
         {
             return await _accountDal.UpdateAsync(account);
+        }
+
+        public decimal GetBalance(Guid id)
+        {
+            return _accountDal.GetBalance(id);
         }
     }
 }

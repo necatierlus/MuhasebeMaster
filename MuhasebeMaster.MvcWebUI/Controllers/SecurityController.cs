@@ -13,7 +13,7 @@ using MuhasebeMaster.MvcWebUI.Services;
 
 namespace MuhasebeMaster.MvcWebUI.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    //[Authorize(Roles = "Administrator")]
     public class SecurityController : Controller
     {
         private UserManager<AppIdentityUser> _userManager;
@@ -84,6 +84,7 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Logout() 
         {
+            HttpContext.Session.Remove("AccountId");
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
         }

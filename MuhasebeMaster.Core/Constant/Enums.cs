@@ -7,11 +7,11 @@ namespace MuhasebeMaster.Core.Constant
         public enum AccountType
         {
             [Display(Name="Müşteri")]
-            Customer,
+            Musteri,
             [Display(Name = "Kiracı")]
-            Tenant,
+            Kiraci,
             [Display(Name = "Esnaf")]
-            Trademen
+            Esnaf
         }
 
         public enum CostType
@@ -19,5 +19,19 @@ namespace MuhasebeMaster.Core.Constant
             TL,
             DOLAR
         }
+
+        public enum PaymentType
+        {
+            Kart,
+            Nakit,
+            Cek_Senet
+        }
+
+        public enum SalesType
+        {
+            Tahsilat,
+            Alacak
+        }
+
     }
 }

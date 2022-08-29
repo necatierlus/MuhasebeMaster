@@ -1,4 +1,5 @@
-﻿using MuhasebeMaster.Entity.Concrete;
+﻿using MuhasebeMaster.DataAccess.Concrete;
+using MuhasebeMaster.Entity.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,6 +16,6 @@ namespace MuhasebeMaster.Business.Abstract
         void Delete(Transaction transaction);
         Transaction GetById(Guid id);
         List<Transaction> GetList();
-        dynamic GetTransactionsByAccount(Guid id);
+        Task<List<TransactionModel>> GetTransactionsByAccount(Guid id);
     }
 }

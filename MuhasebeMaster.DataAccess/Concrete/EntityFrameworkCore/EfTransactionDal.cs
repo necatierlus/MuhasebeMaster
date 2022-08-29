@@ -6,29 +6,37 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MuhasebeMaster.DataAccess.Concrete.EntityFrameworkCore
 {
     public class EfTransactionDal : EfEntityRepositoryBase<Transaction, MuhasebeMasterDbContext>, ITransactionDal
     {
-        public dynamic GetTransactionsByAccount(Guid id)
+        public async Task<List<TransactionModel>> GetTransactionsByAccount(Guid id)
         {
+            List<TransactionModel> transactionModels = new List<TransactionModel>();
             using (var _context = new MuhasebeMasterDbContext())
             {
-                //var tran = _context.Transactions.Where(x => x.AccountId == id && x.IsActive ).OrderByDescending(x => x.AddedDate).AsNoTracking().ToList();
-                var tran = from p in _context.Transactions
-                           where p.AccountId == id && p.IsActive == true
-                           orderby p.AddedDate descending
-                           select new
-                           {
-                               p.Text,
-                               p.Description,
-                               p.Quantity,
-                               p.Price,
-                               p.AddedDate
-                           };
-
-                return tran.AsNoTracking().ToList();
+                List<Transaction> tran = null;
+                tran = await  _context.Transactions.Where(x => x.AccountId == id && x.IsActive==true).OrderByDescending(x => x.AddedDate).ToListAsync();
+                foreach (var item in tran)
+                {
+                    TransactionModel model = new TransactionModel()
+                    {
+                        Id = item.Id,
+                        ProductName = item.ProductId.ToString(),
+                        Description = item.Description,
+                        AddedDate = item.AddedDate,
+                        Quantity = item.Quantity,
+                        Price = item.Price,
+                        PaymentType = item.PaymentType,
+                        CheckDate = item.CheckDate,
+                        Text = item.Text,
+                        Income = item.Income
+                    };
+                    transactionModels.Add(model);
+                }
+                return transactionModels;
             }
         }
     }

@@ -1,4 +1,6 @@
-﻿using MuhasebeMaster.Core.DataAccess.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using MuhasebeMaster.Core.DataAccess.EntityFrameworkCore;
 using MuhasebeMaster.DataAccess.Abstract;
 using MuhasebeMaster.Entity.Concrete;
 using System;
@@ -14,7 +16,7 @@ namespace MuhasebeMaster.DataAccess.Concrete.EntityFrameworkCore
         {
             using (var _context = new MuhasebeMasterDbContext())
             {
-                var data = _context.Accounts.Where(x => x.IsActive && x.AccountType == "Customer").OrderByDescending(x => x.AddedDate).ToList();
+                var data = _context.Accounts.Where(x => x.IsActive && x.AccountType == "Müşteri").OrderByDescending(x => x.AddedDate).ToList();
                 return data;
             }
         }
@@ -23,7 +25,7 @@ namespace MuhasebeMaster.DataAccess.Concrete.EntityFrameworkCore
         {
             using (var _context = new MuhasebeMasterDbContext())
             {
-                var data = _context.Accounts.Where(x => x.IsActive && x.AccountType == "Tenant").OrderByDescending(x => x.AddedDate).ToList();
+                var data = _context.Accounts.Where(x => x.IsActive && x.AccountType == "Kiracı").OrderByDescending(x => x.AddedDate).ToList();
                 return data;
             }
         }
@@ -32,8 +34,28 @@ namespace MuhasebeMaster.DataAccess.Concrete.EntityFrameworkCore
         {
             using (var _context = new MuhasebeMasterDbContext())
             {
-                var data = _context.Accounts.Where(x => x.IsActive && x.AccountType == "Trademen").OrderByDescending(x => x.AddedDate).ToList();
+                var data = _context.Accounts.Where(x => x.IsActive && x.AccountType == "Esnaf").OrderByDescending(x => x.AddedDate).ToList();
                 return data;
+            }
+        }
+
+        public List<Prod> GetProductsByModelNo()
+        {
+            using (var _context = new MuhasebeMasterDbContext())
+            {
+                var data = _context.Prods.AsNoTracking().ToList();
+
+                return data;
+            }
+        }
+
+        public decimal GetBalance(Guid id)
+        {
+            using (var _context = new MuhasebeMasterDbContext())
+            {
+                decimal pos = _context.Transactions.Where(x => x.IsActive== true && x.AccountId == id && x.Income == true).Sum(x => x.Price);
+                decimal neg = _context.Transactions.Where(x => x.IsActive == true && x.AccountId == id && x.Income == false).Sum(x => x.Price);
+                return pos - neg;
             }
         }
 

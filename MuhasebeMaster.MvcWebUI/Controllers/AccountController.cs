@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MuhasebeMaster.Business.Abstract;
 using MuhasebeMaster.Core.Constant;
@@ -41,10 +42,8 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
                 Value = ((int)v).ToString()
             }).ToList();
 
-            var accountViewModel = new AccountViewModel
-            {
-                Accounts = _accountService.GetCustomersByDate()
-            };
+            var accountViewModel = new AccountViewModel();
+            accountViewModel.Accounts = _accountService.GetCustomersByDate();
 
             return View(accountViewModel);
         }
@@ -93,20 +92,38 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
 
         public IActionResult GetAccountDetail(Guid id)
         {
+            HttpContext.Session.SetString("AccountId", id.ToString());
             if (id != null)
             {
                 var accounts = _accountService.GetById(id);
-                var trans = _transactionService.GetTransactionsByAccount(id);
-                var accountViewModel = new AccountViewModel
+                var accountViewModel = new AccountViewModel();
+                accountViewModel.Account = accounts;
+                ViewBag.Balance = 0;
+                var result = _accountService.GetBalance(id);
+                ViewBag.Balance = result;
+
+                ViewBag.ProdModels = _accountService.GetProductsByModelNo().Select(a => new SelectListItem
                 {
-                    Account = accounts,
-                    Transactions = trans
-                };
+                    Text = a.Model,
+                    Value = a.Id.ToString()
+                });
+                ViewBag.PaymentTypes = Enum.GetValues(typeof(PaymentType)).Cast<PaymentType>().Select(v => new SelectListItem
+                {
+                    Text = v.ToString(),
+                    Value = ((int)v).ToString()
+                }).ToList();
+                ViewBag.SalesTypes = Enum.GetValues(typeof(SalesType)).Cast<SalesType>().Select(v => new SelectListItem
+                {
+                    Text = v.ToString(),
+                    Value = ((int)v).ToString()
+                }).ToList();
+
                 return View(accountViewModel);
             }
             return View();
         }
 
+        [HttpPost]
         public IActionResult Add(AccountViewModel accountViewModel)
         {
             if (ModelState.IsValid)
@@ -126,22 +143,22 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
                     City = accountViewModel.Account.City,
                     District = accountViewModel.Account.District,
                     Address = accountViewModel.Account.Address,
-                    AccountType = accountViewModel.Account.AccountType,
-                    CostType = accountViewModel.Account.CostType,
+                    AccountType = accountViewModel.Account.AccountType == "0" ? "Müşteri" : (accountViewModel.Account.AccountType == "1" ? "Kiracı" : (accountViewModel.Account.AccountType == "2" ? "Esnaf" : "")),
+                    CostType = accountViewModel.Account.CostType == "0" ? "TL" : "DOLAR",
                     IsActive = true
                 };
                 try
                 {
                     var addedAccount = _accountService.Add(accountForAdd);
-                    if (accountViewModel.Account.AccountType == "Customer")
+                    if (accountViewModel.Account.AccountType == "0")
                     {
                         return RedirectToAction("GetCustomers");
                     }
-                    if (accountViewModel.Account.AccountType == "Tenant")
+                    if (accountViewModel.Account.AccountType == "1")
                     {
                         return RedirectToAction("GetTenants");
                     }
-                    if (accountViewModel.Account.AccountType == "Trademen")
+                    if (accountViewModel.Account.AccountType == "2")
                     {
                         return RedirectToAction("GetTrademen");
                     }
@@ -151,11 +168,11 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
                     throw new Exception("Bir hata oluştu!");
                 }
             }
-            if (accountViewModel.Account.AccountType == "Tenant")
+            if (accountViewModel.Account.AccountType == "1")
             {
                 return RedirectToAction("GetTenants");
             }
-            if (accountViewModel.Account.AccountType == "Trademen")
+            if (accountViewModel.Account.AccountType == "2")
             {
                 return RedirectToAction("GetTrademen");
             }
@@ -191,8 +208,10 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
                     City = accountViewModel.Account.City,
                     District = accountViewModel.Account.District,
                     Address = accountViewModel.Account.Address,
-                    AccountType = accountViewModel.Account.AccountType,
-                    CostType = accountViewModel.Account.CostType,
+                    AccountType = accountIsValid.AccountType,
+                    CostType = accountIsValid.CostType,
+                    //AccountType = accountViewModel.Account.AccountType == Enums.AccountType.Musteri.ToString() ? "Müşteri" : (accountViewModel.Account.AccountType == Enums.AccountType.Kiraci.ToString() ? "Kiracı" : (accountViewModel.Account.AccountType == Enums.AccountType.Esnaf.ToString() ? "Esnaf" : "")),
+                    //CostType = accountViewModel.Account.CostType == Enums.CostType.TL.ToString() ? "TL" : "DOLAR",
                     IsActive = accountIsValid.IsActive,
                     AddedDate = accountIsValid.AddedDate,
                     Id = accountIsValid.Id,
@@ -201,15 +220,15 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
                 try
                 {
                     _accountService.Update(accountForUpdate);
-                    if (accountViewModel.Account.AccountType == "Customer")
+                    if (accountIsValid.AccountType == "Müşteri")
                     {
                         return RedirectToAction("GetCustomers");
                     }
-                    if (accountViewModel.Account.AccountType == "Tenant")
+                    if (accountIsValid.AccountType == "Kiracı")
                     {
                         return RedirectToAction("GetTenants");
                     }
-                    if (accountViewModel.Account.AccountType == "Trademen")
+                    if (accountIsValid.AccountType == "Esnaf")
                     {
                         return RedirectToAction("GetTrademen");
                     }
@@ -238,59 +257,71 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
             return Json(0);
         }
 
-        public IActionResult AddTransaction(AccountViewModel accountViewModel)
+        public IActionResult AddTransaction(TransactionViewModel model, string drpProduct)
         {
-            if (ModelState.IsValid)
-            {
-                var account = _accountService.GetById(accountViewModel.Account.Id);
-                var prod = _prodService.GetById(accountViewModel.Account.Id);   
+            Guid accId = Guid.Parse(HttpContext.Session.GetString("AccountId"));
+            var acc = _accountService.GetById(accId);
+            //var prod = _prodService.GetByName(model.Prod.Name);
 
-                var transactionForAdd = new Transaction
+            var transactionForAdd = new Transaction
+            {
+                Id = Guid.NewGuid(),
+                AccountId = accId,
+                ProductId = model.Transaction.ProductId != null ? model.Transaction.ProductId : Guid.Empty,
+                Text = model.Transaction.Text,
+                Quantity = model.Transaction.Quantity,
+                Price = model.Transaction.Price,
+                Description = model.Transaction.Description,
+                AddedDate = DateTime.Now,
+                IsActive = true,
+                Income = drpProduct == "0" ? true : false,
+                CheckDate = model.Transaction.CheckDate,
+                PaymentType = model.Transaction.PaymentType == "0" ? "Kart" : (model.Transaction.PaymentType == "1" ? "Nakit" : (model.Transaction.PaymentType == "2" ? "Çek-Senet" : "")),
+            };
+            try
+            {
+                var addedAccount = _transactionService.Add(transactionForAdd);
+                Guid id = addedAccount.Id;
+                var till = new Till
                 {
                     Id = Guid.NewGuid(),
-                    AccountId = account.Id,
-                    ProductId = prod.Id, 
-                    Text = null,
-                    Quantity = accountViewModel.Transaction.Quantity,
-                    Price = accountViewModel.Transaction.Price.ToString().Contains("-")  ? -accountViewModel.Transaction.Price : accountViewModel.Transaction.Price,
-                    Description = accountViewModel.Transaction.Description,
                     AddedDate = DateTime.Now,
-                    IsActive = true,
-                    Income = accountViewModel.Transaction.Price.ToString().Contains("-") ? true : false
+                    TransactionId = id,
+                    AccountId = accId,
+                    PaymentId = Guid.Empty,
+                    Price = model.Transaction.Price,
+                    CostType = acc.CostType,
+                    IsTill = false,
+                    IsActive = true
                 };
-                try
-                {
-                    var addedAccount = _transactionService.Add(transactionForAdd);
-                    Guid id = addedAccount.Id;
-                    var till = new Till
-                    {
-                        Id = Guid.NewGuid(),
-                        AddedDate =  DateTime.Now,
-                        TransactionId = id,
-                        AccountId = account.Id,
-                        PaymentId = Guid.Empty,
-                        Price = accountViewModel.Transaction.Price.ToString().Contains("-") ? -accountViewModel.Transaction.Price : accountViewModel.Transaction.Price,
-                        CostType = account.CostType,
-                        IsTill = false,
-                        IsActive = true
-                    };
-                    _tillService.Add(till);
-                    return Redirect("/Account/GetAccountDetail/" + accountViewModel.Account.Id);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Bir hata oluştu!");
-                }
+                _tillService.Add(till);
+                return Redirect("/Account/GetAccountDetail/" + accId);
             }
+            catch (Exception ex)
+            {
+                throw new Exception("Bir hata oluştu!");
+            }
+
             return View();
         }
 
+        public JsonResult EditTransaction(Guid id)
+        {
+            if (id != null)
+            {
+                var result = _transactionService.GetById(id);
+                return Json(result);
+            }
+
+            return Json(0);
+        }
+
         [HttpPost]
-        public IActionResult EditTransaction(AccountViewModel accountViewModel)
+        public IActionResult EditTransaction(TransactionViewModel accountViewModel)
         {
             if (ModelState.IsValid)
             {
-                var account = _accountService.GetById(accountViewModel.Account.Id);
+                //var account = _accountService.GetById(accountViewModel.Transaction.AccountId);
                 var transaction = _transactionService.GetById(accountViewModel.Transaction.Id);
                 if (transaction == null)
                 {
@@ -300,14 +331,16 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
                 {
                     Id = transaction.Id,
                     AccountId = transaction.AccountId,
-                    ProductId = accountViewModel.Transaction.ProductId,
-                    Text = null,
+                    ProductId = transaction.ProductId,
+                    Text = accountViewModel.Transaction.Text,
                     Quantity = accountViewModel.Transaction.Quantity,
-                    Price = accountViewModel.Transaction.Price.ToString().Contains("-") ? -accountViewModel.Transaction.Price : accountViewModel.Transaction.Price,
+                    Price = accountViewModel.Transaction.Price,
                     Description = accountViewModel.Transaction.Description,
                     AddedDate = transaction.AddedDate,
                     IsActive = transaction.IsActive,
-                    Income = accountViewModel.Transaction.Price.ToString().Contains("-") ? true : false
+                    Income = transaction.Income,
+                    CheckDate = transaction.CheckDate,
+                    PaymentType = transaction.PaymentType
                 };
                 try
                 {
@@ -320,13 +353,13 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
                         TransactionId = tillById.Id,
                         AccountId = tillById.AccountId,
                         PaymentId = tillById.PaymentId,
-                        Price = accountViewModel.Transaction.Price.ToString().Contains("-") ? -accountViewModel.Transaction.Price : accountViewModel.Transaction.Price,
+                        Price = accountViewModel.Transaction.Price,
                         CostType = tillById.CostType,
                         IsTill = tillById.IsTill,
                         IsActive = tillById.IsActive
                     };
                     _tillService.Update(till);
-                    return Redirect("/Account/GetAccountDetail/" + accountViewModel.Account.Id);
+                    return Redirect("/Account/GetAccountDetail/" + transaction.AccountId);
                 }
                 catch (Exception)
                 {
@@ -335,15 +368,6 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
             }
             return View();
         }
-
-        public JsonResult GetTransactions()
-        {
-            //var trans = _transactionService.GetTransactionsByAccount(id);
-            //var all = from p in _conte 
-
-            return Json(0);
-        }
-
 
         public JsonResult DeleteTransaction(Guid id)
         {
@@ -357,11 +381,47 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
                 transaction.IsActive = false; //soft delete
                 _transactionService.Update(transaction);
                 var tillById = _tillService.GetByTransaction(transaction.Id);
-                tillById.IsActive = false;
-                _tillService.Update(tillById);
+                if (tillById != null)
+                {
+                    tillById.IsActive = false;
+                    _tillService.Update(tillById);
+                }
+                
                 return Json(1);
             }
             return Json(0);
+        }
+
+        public IActionResult IncomeTL()
+        {
+            var accountViewModel = new AccountViewModel();
+            accountViewModel.Accounts = _accountService.GetCustomersByDate();
+
+            return View(accountViewModel);
+        }
+
+        public IActionResult IncomeDollar()
+        {
+            var accountViewModel = new AccountViewModel();
+            accountViewModel.Accounts = _accountService.GetCustomersByDate();
+
+            return View(accountViewModel);
+        }
+
+        public IActionResult ExpenseTL()
+        {
+            var accountViewModel = new AccountViewModel();
+            accountViewModel.Accounts = _accountService.GetCustomersByDate();
+
+            return View(accountViewModel);
+        }
+
+        public IActionResult ExpenseDollar()
+        {
+            var accountViewModel = new AccountViewModel();
+            accountViewModel.Accounts = _accountService.GetCustomersByDate();
+
+            return View(accountViewModel);
         }
 
     }

@@ -1,19 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using MuhasebeMaster.DataAccess.Concrete;
 using MuhasebeMaster.Entity.Concrete;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MuhasebeMaster.MvcWebUI.Models
 {
-    public class AccountViewModel
+    public class TransactionViewModel
     {
+        public List<TransactionModel> TransactionModel { get; set; }
+
         public Account Account { get; set; }
         public List<Account> Accounts { get; set; }
-        public List<SelectListItem> AccountTypes { get; set; }
-        public List<SelectListItem> CostTypes { get; set; }
         public Transaction Transaction { get; set; }
         public List<Transaction> Transactions { get; set; }
-        public Product Product { get; set; }
-        public List<Prod> ProductsByModelNo { get; set; }
+        public Prod Prod { get; set; }
+        public List<Prod> Products { get; set; }
     }
 }

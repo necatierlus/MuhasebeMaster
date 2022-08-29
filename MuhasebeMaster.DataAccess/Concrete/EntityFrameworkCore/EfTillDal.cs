@@ -14,7 +14,7 @@ namespace MuhasebeMaster.DataAccess.Concrete.EntityFrameworkCore
         {
             using (var _context = new MuhasebeMasterDbContext())
             {
-                var total = _context.Tills.Where(x => x.IsTill == true && x.IsActive && x.CostType == "TL").Sum(x => x.Price);
+                var total = _context.Tills.Where(x => x.IsTill == false && x.IsActive && x.CostType == "TL").Sum(x => x.Price);
                 return total;
             }
         }
@@ -23,7 +23,7 @@ namespace MuhasebeMaster.DataAccess.Concrete.EntityFrameworkCore
         {
             using (var _context = new MuhasebeMasterDbContext())
             {
-                var total = _context.Tills.Where(x => x.IsTill == true && x.IsActive  && x.CostType == "DOLAR").Sum(x => x.Price);
+                var total = _context.Tills.Where(x => x.IsTill == false && x.IsActive  && x.CostType == "DOLAR").Sum(x => x.Price);
                 return total;
             }
         }

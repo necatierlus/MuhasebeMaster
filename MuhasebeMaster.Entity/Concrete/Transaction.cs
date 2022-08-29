@@ -7,7 +7,6 @@ namespace MuhasebeMaster.Entity.Concrete
 {
     public class Transaction : IEntity
     {
-
         public Guid Id { get; set; }
         public Guid AccountId { get; set; }
         public Guid ProductId { get; set; }
@@ -15,6 +14,8 @@ namespace MuhasebeMaster.Entity.Concrete
         public int Quantity { get; set; }
         public decimal Price { get; set; }
         public string Description { get; set; }
+        public string PaymentType { get; set; }
+        public DateTime CheckDate { get; set; }
         public DateTime AddedDate { get; set; }
         public bool Income { get; set; }
         public bool IsActive { get; set; }
