@@ -37,7 +37,9 @@ namespace MuhasebeMaster.MvcWebUI
 
             services.AddSession();
 
+            //services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration["MuhasebeMasterDbConnection"]));
             services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration["MuhasebeMasterDbConnection"]));
+            //services.AddDbContext<MuhasebeMasterDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MuhasebeMasterDbConnection")));
 
             services.AddIdentity<AppIdentityUser, AppIdentityRole>()
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
