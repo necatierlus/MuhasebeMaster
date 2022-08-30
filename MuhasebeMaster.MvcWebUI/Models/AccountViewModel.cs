@@ -15,5 +15,6 @@ namespace MuhasebeMaster.MvcWebUI.Models
         public List<Transaction> Transactions { get; set; }
         public Product Product { get; set; }
         public List<Prod> ProductsByModelNo { get; set; }
+        public List<Till> Tills { get; set; }
     }
 }

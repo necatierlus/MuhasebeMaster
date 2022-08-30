@@ -59,5 +59,40 @@ namespace MuhasebeMaster.DataAccess.Concrete.EntityFrameworkCore
             }
         }
 
+        public List<Till> GetTLIncome()
+        {
+            using (var _context = new MuhasebeMasterDbContext())
+            {
+                var data = _context.Tills.Where(x => x.IsActive == true && x.Income == true && x.IsTill == false && x.CostType=="TL").OrderByDescending(x=>x.AddedDate).AsNoTracking().ToList();
+                return data;
+            }
+        }
+
+        public List<Till> GetDollarIncome()
+        {
+            using (var _context = new MuhasebeMasterDbContext())
+            {
+                var data = _context.Tills.Where(x => x.IsActive == true && x.Income == true && x.IsTill == false && x.CostType == "DOLAR").OrderByDescending(x => x.AddedDate).AsNoTracking().ToList();
+                return data;
+            }
+        }
+
+        public List<Till> GetTLExpense()
+        {
+            using (var _context = new MuhasebeMasterDbContext())
+            {
+                var data = _context.Tills.Where(x => x.IsActive == true && x.Income == false && x.IsTill == false && x.CostType == "TL").OrderByDescending(x => x.AddedDate).AsNoTracking().ToList();
+                return data;
+            }
+        }
+
+        public List<Till> GetDollarExpense()
+        {
+            using (var _context = new MuhasebeMasterDbContext())
+            {
+                var data = _context.Tills.Where(x => x.IsActive == true && x.Income == false && x.IsTill == false && x.CostType == "DOLAR").OrderByDescending(x => x.AddedDate).AsNoTracking().ToList();
+                return data;
+            }
+        }
     }
 }

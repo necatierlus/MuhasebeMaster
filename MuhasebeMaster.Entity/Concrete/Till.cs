@@ -16,6 +16,6 @@ namespace MuhasebeMaster.Entity.Concrete
         public DateTime AddedDate { get; set; }
         public bool IsTill { get; set; }
         public bool IsActive { get; set; }
-
+        public bool Income { get; set; }
     }
 }

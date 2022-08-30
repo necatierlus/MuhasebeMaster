@@ -13,5 +13,10 @@ namespace MuhasebeMaster.DataAccess.Abstract
         List<Account> GetTrademenByDate();
         List<Prod> GetProductsByModelNo();
         decimal GetBalance(Guid id);
+        List<Till> GetTLIncome();
+        List<Till> GetDollarIncome();
+        List<Till> GetTLExpense();
+        List<Till> GetDollarExpense();
+
     }
 }

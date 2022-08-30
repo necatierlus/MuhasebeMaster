@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MuhasebeMaster.Business.Abstract;
@@ -13,6 +14,7 @@ using static MuhasebeMaster.Core.Constant.Enums;
 
 namespace MuhasebeMaster.MvcWebUI.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         IAccountService _accountService;
@@ -292,7 +294,8 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
                     Price = model.Transaction.Price,
                     CostType = acc.CostType,
                     IsTill = false,
-                    IsActive = true
+                    IsActive = true,
+                    Income = drpProduct == "0" ? true : false,
                 };
                 _tillService.Add(till);
                 return Redirect("/Account/GetAccountDetail/" + accId);
@@ -356,7 +359,8 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
                         Price = accountViewModel.Transaction.Price,
                         CostType = tillById.CostType,
                         IsTill = tillById.IsTill,
-                        IsActive = tillById.IsActive
+                        IsActive = tillById.IsActive,
+                        Income = tillById.Income
                     };
                     _tillService.Update(till);
                     return Redirect("/Account/GetAccountDetail/" + transaction.AccountId);
@@ -395,7 +399,7 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
         public IActionResult IncomeTL()
         {
             var accountViewModel = new AccountViewModel();
-            accountViewModel.Accounts = _accountService.GetCustomersByDate();
+            accountViewModel.Tills = _accountService.GetTLIncome();
 
             return View(accountViewModel);
         }
@@ -403,7 +407,7 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
         public IActionResult IncomeDollar()
         {
             var accountViewModel = new AccountViewModel();
-            accountViewModel.Accounts = _accountService.GetCustomersByDate();
+            accountViewModel.Tills = _accountService.GetDollarIncome();
 
             return View(accountViewModel);
         }
@@ -411,7 +415,7 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
         public IActionResult ExpenseTL()
         {
             var accountViewModel = new AccountViewModel();
-            accountViewModel.Accounts = _accountService.GetCustomersByDate();
+            accountViewModel.Tills = _accountService.GetTLExpense();
 
             return View(accountViewModel);
         }
@@ -419,7 +423,7 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
         public IActionResult ExpenseDollar()
         {
             var accountViewModel = new AccountViewModel();
-            accountViewModel.Accounts = _accountService.GetCustomersByDate();
+            accountViewModel.Tills = _accountService.GetDollarExpense();
 
             return View(accountViewModel);
         }

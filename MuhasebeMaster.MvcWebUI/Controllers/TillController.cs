@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MuhasebeMaster.Business.Abstract;
 
 namespace MuhasebeMaster.MvcWebUI.Controllers
 {
+    [Authorize]
     public class TillController : Controller
     {
         ITillService _tillService;

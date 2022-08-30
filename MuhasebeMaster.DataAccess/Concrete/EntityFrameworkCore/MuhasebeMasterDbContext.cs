@@ -11,7 +11,8 @@ namespace MuhasebeMaster.DataAccess.Concrete.EntityFrameworkCore
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server =.\\MSSQLSERVER2017; Database = livemome_db; user Id = livemome_db; password = 8zhy4N ^ 50; integrated security = false;");
+            //optionsBuilder.UseSqlServer("MuhasebeMasterDbConnection");
+            optionsBuilder.UseSqlServer(@"Data Source=89.252.185.155\\MSSQLSERVER2017;Initial Catalog=livemome_db;User Id=livemome_db;Password=X7b5x#d44;");
             //optionsBuilder.UseSqlServer(@"Data Source=LAPTOP-7938FFHG\SQLEXPRESS;Database=MuhasebeMasterDb;integrated security=true;Connection Timeout=1800;MultipleActiveResultSets=True");
         }
 

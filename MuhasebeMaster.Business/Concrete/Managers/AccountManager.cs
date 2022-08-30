@@ -74,5 +74,25 @@ namespace MuhasebeMaster.Business.Concrete.Managers
         {
             return _accountDal.GetBalance(id);
         }
+
+        public List<Till> GetTLIncome()
+        {
+            return _accountDal.GetTLIncome();
+        }
+
+        public List<Till> GetDollarIncome()
+        {
+            return _accountDal.GetDollarIncome();
+        }
+
+        public List<Till> GetTLExpense()
+        {
+            return _accountDal.GetTLExpense();
+        }
+
+        public List<Till> GetDollarExpense()
+        {
+            return _accountDal.GetDollarExpense();
+        }
     }
 }

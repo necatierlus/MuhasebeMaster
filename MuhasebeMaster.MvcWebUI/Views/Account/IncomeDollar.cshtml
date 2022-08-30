@@ -1,0 +1,49 @@
+﻿@model MuhasebeMaster.MvcWebUI.Models.AccountViewModel
+@{
+    ViewData["Title"] = "IncomeDollar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            @*<div class="dropdown pull-right">
+                    <a href="#" class="dropdown-toggle card-drop" data-toggle="dropdown" aria-expanded="false">
+                        <i class="zmdi zmdi-more-vert"></i>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#" data-toggle="modal" data-target="#product-adding-modal"> Yeni Ekle </a></li>
+                    </ul>
+                </div>*@
+
+            <h4 class="header-title m-t-0 m-b-30">Dolar Gelirler</h4>
+
+            <div id="datatable-buttons_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                <table id="datatable-buttons" class="table table-striped table-bordered dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="datatable-buttons_info">
+                    <thead>
+                        <tr role="row">
+                            <th class="sorting_asc" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 20px;">Hesap Id</th>
+                            <th class="sorting_" tabindex="1" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Model: activate to sort column descending" style="width: 450px;">Tutar</th>
+                            <th class="sorting" tabindex="2" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-label="Quantity: activate to sort column ascending" style="width: 100px;">Tarih</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Tills)
+                        {
+                            <tr role="row" class="odd">
+                                <td class="sorting_1" tabindex="0">
+                                    <a href="/Account/GetAccountDetail/@item.AccountId">
+                                        @item.AccountId
+                                    </a>
+                                </td>
+                                <td>@item.Price</td>
+                                <td>@item.AddedDate</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div><!-- end col -->
+</div>
+

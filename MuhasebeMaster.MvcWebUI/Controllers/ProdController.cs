@@ -11,7 +11,7 @@ using System.Security.Claims;
 
 namespace MuhasebeMaster.MvcWebUI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class ProdController : Controller
     {
         IProdService _prodService;
