@@ -34,11 +34,32 @@
                         @foreach (var item in Model.TransactionModel)
                         {
                         <tr role="row" class="odd">
-                            <td class="sorting_1" tabindex="0">@item.ProductName</td>
+                            <td class="sorting_1" tabindex="0">
+                                @if (item.ProductName == Guid.Empty.ToString())
+                                {
+                                    <text></text>
+                                }
+                                else
+                                {
+                                <a href="/Prod/GetProductDetail/@item.ProductName">
+                                    @item.ProductName
+                                </a>
+                                }
+
+                            </td>
                             <td>@item.Text</td>
                             <td>@item.Description</td>
                             <td>@item.PaymentType</td>
-                            <td>@item.CheckDate</td>
+                            <td>
+                                @if (item.CheckDate.ToString().Contains("1.01.0001"))
+                                {
+                                    <text></text>
+                                }
+                                else
+                                {
+                                    @item.CheckDate
+                                }
+                            </td>
                             <td>
                                 @if (item.Income)
                                 {
@@ -78,7 +99,7 @@
                         <div class="col-md-12">
                             @*<input asp-for="@Model.Account.Id" id="accountId" hidden />*@
                             <div class="form-group">
-                                <label for="field-1" class="control-label">Ürün</label>
+                                <label for="field-1" class="control-label">Tahsilat / Alacak</label>
                                 <select class="form-control" id="drpProduct" name="drpProduct" asp-items="@ViewBag.SalesTypes">
                                     <option disabled selected value="-1">--Choose--</option>
                                 </select>
@@ -91,7 +112,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="field-2" class="control-label">Text</label>
+                                <label for="field-2" class="control-label">FreeText</label>
                                 <input asp-for="@Model.Transaction.Text" type="text" class="form-control" id="field-1" placeholder="e.g. Text">
                             </div>
                             <div class="form-group">
