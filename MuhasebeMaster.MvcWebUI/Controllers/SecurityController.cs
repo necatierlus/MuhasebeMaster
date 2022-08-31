@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using MuhasebeMaster.MvcWebUI.Identity;
+using MuhasebeMaster.DataAccess.Identity;
 using MuhasebeMaster.MvcWebUI.Models.Security;
 using MuhasebeMaster.MvcWebUI.Services;
 

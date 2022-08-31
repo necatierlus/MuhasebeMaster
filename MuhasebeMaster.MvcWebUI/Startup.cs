@@ -12,10 +12,10 @@ using MuhasebeMaster.Business.Abstract;
 using MuhasebeMaster.Business.Concrete.Managers;
 using MuhasebeMaster.DataAccess.Abstract;
 using MuhasebeMaster.DataAccess.Concrete.EntityFrameworkCore;
-using MuhasebeMaster.MvcWebUI.Identity;
 using MuhasebeMaster.MvcWebUI.Services;
 using Microsoft.Extensions.Logging;
 using MuhasebeMaster.MvcWebUI.Controllers;
+using MuhasebeMaster.DataAccess.Identity;
 
 namespace MuhasebeMaster.MvcWebUI
 {
@@ -38,11 +38,11 @@ namespace MuhasebeMaster.MvcWebUI
             services.AddSession();
 
             //services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration["MuhasebeMasterDbConnection"]));
-            services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration["MuhasebeMasterDbConnection"]));
-            //services.AddDbContext<MuhasebeMasterDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MuhasebeMasterDbConnection")));
+            //services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration["MuhasebeMasterDbConnection"]));
+            services.AddDbContext<MuhasebeMasterDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MuhasebeMasterDbConnection")));
 
             services.AddIdentity<AppIdentityUser, AppIdentityRole>()
-                .AddEntityFrameworkStores<AppIdentityDbContext>()
+                .AddEntityFrameworkStores<MuhasebeMasterDbContext>()
                 .AddDefaultTokenProviders();
 
             services.Configure<IdentityOptions>(options => {

@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MuhasebeMaster.MvcWebUI.Identity;
+using MuhasebeMaster.DataAccess.Concrete.EntityFrameworkCore;
 
 namespace MuhasebeMaster.MvcWebUI.Migrations
 {
-    [DbContext(typeof(AppIdentityDbContext))]
+    [DbContext(typeof(MuhasebeMasterDbContext))]
     partial class AppIdentityDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
