@@ -59,6 +59,26 @@ namespace MuhasebeMaster.DataAccess.Concrete.EntityFrameworkCore
             }
         }
 
+        public decimal GetTrademenTLBalance()
+        {
+            using (var _context = new MuhasebeMasterDbContext())
+            {
+                decimal pos = _context.Tills.Where(x => x.IsActive == true && x.Income == true && x.IsTill == false && x.CostType == "TL" && x.AccountType == "Esnaf").Sum(x => x.Price);
+                decimal neg = _context.Tills.Where(x => x.IsActive == true && x.Income == false && x.IsTill == false && x.CostType == "TL" && x.AccountType == "Esnaf").Sum(x => x.Price);
+                return pos - neg;
+            }
+        }
+
+        public decimal GetTrademenDollarBalance()
+        {
+            using (var _context = new MuhasebeMasterDbContext())
+            {
+                decimal pos = _context.Tills.Where(x => x.IsActive == true && x.Income == true && x.IsTill == false && x.CostType == "DOLAR" && x.AccountType == "Esnaf").Sum(x => x.Price);
+                decimal neg = _context.Tills.Where(x => x.IsActive == true && x.Income == false && x.IsTill == false && x.CostType == "DOLAR" && x.AccountType == "Esnaf").Sum(x => x.Price);
+                return pos - neg;
+            }
+        }
+
         public List<Till> GetTLIncome()
         {
             using (var _context = new MuhasebeMasterDbContext())

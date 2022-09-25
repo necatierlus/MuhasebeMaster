@@ -13,6 +13,7 @@ namespace MuhasebeMaster.Entity.Concrete
         public Guid PaymentId { get; set; }
         public decimal Price { get; set; }
         public string CostType { get; set; }
+        public string AccountType { get; set; }
         public DateTime AddedDate { get; set; }
         public bool IsTill { get; set; }
         public bool IsActive { get; set; }

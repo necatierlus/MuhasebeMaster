@@ -73,6 +73,8 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
 
         public IActionResult GetTrademen()
         {
+            ViewBag.TrademenTLBalance = 0;
+            ViewBag.TrademenDollarBalance = 0;
             ViewBag.AccountTypes = Enum.GetValues(typeof(AccountType)).Cast<AccountType>().Select(v => new SelectListItem
             {
                 Text = v.ToString(),
@@ -89,6 +91,9 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
             {
                 Accounts = _accountService.GetTrademenByDate()
             };
+
+            ViewBag.TrademenTLBalance = _accountService.GetTrademenTLBalance();
+            ViewBag.TrademenDollarBalance = _accountService.GetTrademenDollarBalance();
             return View(accountViewModel);
         }
 
@@ -293,6 +298,7 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
                     PaymentId = Guid.Empty,
                     Price = model.Transaction.Price,
                     CostType = acc.CostType,
+                    AccountType = acc.AccountType,
                     IsTill = false,
                     IsActive = true,
                     Income = drpProduct == "0" ? true : false,
@@ -349,6 +355,7 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
                 {
                     _transactionService.Update(transactionForUpdate);
                     var tillById = _tillService.GetByTransaction(transaction.Id);
+                    var acc = _accountService.GetById(tillById.AccountId);
                     var till = new Till
                     {
                         Id = tillById.Id,
@@ -358,6 +365,7 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
                         PaymentId = tillById.PaymentId,
                         Price = accountViewModel.Transaction.Price,
                         CostType = tillById.CostType,
+                        AccountType = acc.AccountType,
                         IsTill = tillById.IsTill,
                         IsActive = tillById.IsActive,
                         Income = tillById.Income

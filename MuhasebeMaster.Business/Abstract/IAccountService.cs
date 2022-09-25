@@ -20,6 +20,8 @@ namespace MuhasebeMaster.Business.Abstract
         List<Account> GetTrademenByDate();
         List<Prod> GetProductsByModelNo();
         decimal GetBalance(Guid id);
+        public decimal GetTrademenTLBalance();
+        public decimal GetTrademenDollarBalance();
         List<Till> GetTLIncome();
         List<Till> GetDollarIncome();
         List<Till> GetTLExpense();

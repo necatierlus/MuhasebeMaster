@@ -17,6 +17,8 @@ namespace MuhasebeMaster.DataAccess.Abstract
         List<Till> GetDollarIncome();
         List<Till> GetTLExpense();
         List<Till> GetDollarExpense();
+        public decimal GetTrademenTLBalance();
+        public decimal GetTrademenDollarBalance();
 
     }
 }
