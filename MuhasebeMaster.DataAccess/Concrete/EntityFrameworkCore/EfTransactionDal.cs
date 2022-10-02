@@ -21,10 +21,11 @@ namespace MuhasebeMaster.DataAccess.Concrete.EntityFrameworkCore
                 tran = await  _context.Transactions.Where(x => x.AccountId == id && x.IsActive==true).OrderByDescending(x => x.AddedDate).ToListAsync();
                 foreach (var item in tran)
                 {
+                    var prod = _context.Prods.Where(x => x.Id == item.ProductId).FirstOrDefault();
                     TransactionModel model = new TransactionModel()
                     {
                         Id = item.Id,
-                        ProductName = item.ProductId.ToString(),
+                        ProductName = prod!= null ? prod.Name : item.ProductId.ToString(),
                         Description = item.Description,
                         AddedDate = item.AddedDate,
                         Quantity = item.Quantity,

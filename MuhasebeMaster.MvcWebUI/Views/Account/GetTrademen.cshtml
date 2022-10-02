@@ -40,7 +40,7 @@
                                 <td>@item.Phone</td>
                                 <td>@item.City</td>
                                 <td>@item.District</td>
-                                <td>@item.AddedDate</td>
+                                <td>@item.AddedDate.ToString("dd/MM/yyyy")</td>
                                 <td align="center"><button class="btn btn-purple" onclick="editProduct('@item.Id')">Güncelle</button></td>
                                 <td align="center"><button class="btn btn-danger" onclick="deleteProduct('@item.Id')">Sil</button></td>
                                 <td align="center"><a href="/Account/GetAccountDetail/@item.Id" class="btn btn-info">Detay</a></td>

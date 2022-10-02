@@ -85,6 +85,15 @@ namespace MuhasebeMaster.Business.Concrete.Managers
             return _accountDal.GetTrademenDollarBalance();
         }
 
+        public decimal GetCustomerTLBalance()
+        {
+            return _accountDal.GetCustomerTLBalance();
+        }
+
+        public decimal GetCustomerDollarBalance()
+        {
+            return _accountDal.GetCustomerDollarBalance();
+        }
 
         public List<Till> GetTLIncome()
         {

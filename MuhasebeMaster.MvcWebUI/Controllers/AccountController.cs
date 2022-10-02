@@ -32,6 +32,8 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
 
         public IActionResult GetCustomers()
         {
+            ViewBag.CustomerTLBalance = 0;
+            ViewBag.CustomerDollarBalance = 0;
             ViewBag.AccountTypes = Enum.GetValues(typeof(AccountType)).Cast<AccountType>().Select(v => new SelectListItem
             {
                 Text = v.ToString(),
@@ -47,6 +49,8 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
             var accountViewModel = new AccountViewModel();
             accountViewModel.Accounts = _accountService.GetCustomersByDate();
 
+            ViewBag.CustomerTLBalance = _accountService.GetCustomerTLBalance();
+            ViewBag.CustomerDollarBalance = _accountService.GetCustomerDollarBalance();
             return View(accountViewModel);
         }
 
@@ -172,7 +176,7 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Bir hata oluştu!");
+                    throw new Exception("Bir hata oluştu!", ex.InnerException);
                 }
             }
             if (accountViewModel.Account.AccountType == "1")
@@ -408,7 +412,7 @@ namespace MuhasebeMaster.MvcWebUI.Controllers
         {
             var accountViewModel = new AccountViewModel();
             accountViewModel.Tills = _accountService.GetTLIncome();
-
+            
             return View(accountViewModel);
         }
 

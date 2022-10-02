@@ -59,6 +59,26 @@ namespace MuhasebeMaster.DataAccess.Concrete.EntityFrameworkCore
             }
         }
 
+        public decimal GetCustomerTLBalance()
+        {
+            using (var _context = new MuhasebeMasterDbContext())
+            {
+                decimal pos = _context.Tills.Where(x => x.IsActive == true && x.Income == true && x.IsTill == false && x.CostType == "TL" && x.AccountType == "Müşteri").Sum(x => x.Price);
+                decimal neg = _context.Tills.Where(x => x.IsActive == true && x.Income == false && x.IsTill == false && x.CostType == "TL" && x.AccountType == "Müşteri").Sum(x => x.Price);
+                return pos - neg;
+            }
+        }
+
+        public decimal GetCustomerDollarBalance()
+        {
+            using (var _context = new MuhasebeMasterDbContext())
+            {
+                decimal pos = _context.Tills.Where(x => x.IsActive == true && x.Income == true && x.IsTill == false && x.CostType == "DOLAR" && x.AccountType == "Müşteri").Sum(x => x.Price);
+                decimal neg = _context.Tills.Where(x => x.IsActive == true && x.Income == false && x.IsTill == false && x.CostType == "DOLAR" && x.AccountType == "Müşteri").Sum(x => x.Price);
+                return pos - neg;
+            }
+        }
+
         public decimal GetTrademenTLBalance()
         {
             using (var _context = new MuhasebeMasterDbContext())
@@ -93,6 +113,7 @@ namespace MuhasebeMaster.DataAccess.Concrete.EntityFrameworkCore
             using (var _context = new MuhasebeMasterDbContext())
             {
                 var data = _context.Tills.Where(x => x.IsActive == true && x.Income == true && x.IsTill == false && x.CostType == "DOLAR").OrderByDescending(x => x.AddedDate).AsNoTracking().ToList();
+
                 return data;
             }
         }

@@ -22,6 +22,8 @@ namespace MuhasebeMaster.Business.Abstract
         decimal GetBalance(Guid id);
         public decimal GetTrademenTLBalance();
         public decimal GetTrademenDollarBalance();
+        public decimal GetCustomerTLBalance();
+        public decimal GetCustomerDollarBalance();
         List<Till> GetTLIncome();
         List<Till> GetDollarIncome();
         List<Till> GetTLExpense();

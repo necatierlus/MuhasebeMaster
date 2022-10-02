@@ -26,7 +26,7 @@
                             <th class="sorting_" tabindex="1" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Model: activate to sort column descending" style="width: 450px;">Telefon</th>
                             <th class="sorting" tabindex="2" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-label="Quantity: activate to sort column ascending" style="width: 100px;">Şehir</th>
                             <th class="sorting" tabindex="3" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-label="AddedDate: activate to sort column ascending" style="width: 200px;">İlçe</th>
-                             <th class="sorting" tabindex="4" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-label="AddedDate: activate to sort column ascending" style="width: 200px;">Tarih</th>
+                            <th class="sorting" tabindex="4" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-label="AddedDate: activate to sort column ascending" style="width: 200px;">Tarih</th>
                             <th rowspan="1" colspan="1" style="width: 50px; display: none" ;>&</th>
                             <th rowspan="1" colspan="1" style="width: 50px; display: none" ;>&</th>
                             <th rowspan="1" colspan="1" style="width: 50px; display: none" ;>&</th>
@@ -40,7 +40,7 @@
                                 <td>@item.Phone</td>
                                 <td>@item.City</td>
                                 <td>@item.District</td>
-                                <td>@item.AddedDate</td>
+                                <td>@item.AddedDate.ToString("dd/MM/yyyy")</td>
                                 @*guid oldugu ıcın parametreyı tek tırnakla gonderıyorum*@
                                 <td align="center"><button class="btn btn-purple" onclick="editProduct('@item.Id')">Güncelle</button></td>
                                 <td align="center"><button class="btn btn-danger" onclick="deleteProduct('@item.Id')">Sil</button></td>
@@ -49,6 +49,8 @@
                         }
                     </tbody>
                 </table>
+                <p>Toplam Müşteri TL Bakiyesi : @ViewBag.CustomerTLBalance </p>
+                <p>Toplam Müşteri DOLAR Bakiyesi : @ViewBag.CustomerDollarBalance </p>
             </div>
         </div>
     </div><!-- end col -->
