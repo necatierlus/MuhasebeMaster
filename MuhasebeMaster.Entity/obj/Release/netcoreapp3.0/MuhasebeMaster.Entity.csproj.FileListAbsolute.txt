@@ -1,0 +1,12 @@
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.Entity\bin\Release\netcoreapp3.0\MuhasebeMaster.Entity.deps.json
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.Entity\bin\Release\netcoreapp3.0\MuhasebeMaster.Entity.dll
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.Entity\bin\Release\netcoreapp3.0\MuhasebeMaster.Entity.pdb
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.Entity\bin\Release\netcoreapp3.0\MuhasebeMaster.Core.dll
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.Entity\bin\Release\netcoreapp3.0\MuhasebeMaster.Core.pdb
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.Entity\obj\Release\netcoreapp3.0\MuhasebeMaster.Entity.csproj.AssemblyReference.cache
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.Entity\obj\Release\netcoreapp3.0\MuhasebeMaster.Entity.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.Entity\obj\Release\netcoreapp3.0\MuhasebeMaster.Entity.AssemblyInfoInputs.cache
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.Entity\obj\Release\netcoreapp3.0\MuhasebeMaster.Entity.AssemblyInfo.cs
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.Entity\obj\Release\netcoreapp3.0\MuhasebeMaster.Entity.csproj.CoreCompileInputs.cache
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.Entity\obj\Release\netcoreapp3.0\MuhasebeMaster.Entity.dll
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.Entity\obj\Release\netcoreapp3.0\MuhasebeMaster.Entity.pdb

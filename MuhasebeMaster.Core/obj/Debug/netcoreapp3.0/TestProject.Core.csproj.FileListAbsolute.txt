@@ -1,0 +1,8 @@
+C:\Users\Petito\source\repos\TestProject\TestProject.Core\bin\Debug\netcoreapp3.0\TestProject.Core.deps.json
+C:\Users\Petito\source\repos\TestProject\TestProject.Core\bin\Debug\netcoreapp3.0\TestProject.Core.dll
+C:\Users\Petito\source\repos\TestProject\TestProject.Core\obj\Debug\netcoreapp3.0\TestProject.Core.csprojAssemblyReference.cache
+C:\Users\Petito\source\repos\TestProject\TestProject.Core\obj\Debug\netcoreapp3.0\TestProject.Core.AssemblyInfoInputs.cache
+C:\Users\Petito\source\repos\TestProject\TestProject.Core\obj\Debug\netcoreapp3.0\TestProject.Core.AssemblyInfo.cs
+C:\Users\Petito\source\repos\TestProject\TestProject.Core\bin\Debug\netcoreapp3.0\TestProject.Core.pdb
+C:\Users\Petito\source\repos\TestProject\TestProject.Core\obj\Debug\netcoreapp3.0\TestProject.Core.dll
+C:\Users\Petito\source\repos\TestProject\TestProject.Core\obj\Debug\netcoreapp3.0\TestProject.Core.pdb

@@ -1,0 +1,14 @@
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.DataAccess\bin\Release\netcoreapp3.0\MuhasebeMaster.DataAccess.deps.json
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.DataAccess\bin\Release\netcoreapp3.0\MuhasebeMaster.DataAccess.dll
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.DataAccess\bin\Release\netcoreapp3.0\MuhasebeMaster.DataAccess.pdb
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.DataAccess\bin\Release\netcoreapp3.0\MuhasebeMaster.Core.dll
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.DataAccess\bin\Release\netcoreapp3.0\MuhasebeMaster.Entity.dll
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.DataAccess\bin\Release\netcoreapp3.0\MuhasebeMaster.Entity.pdb
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.DataAccess\bin\Release\netcoreapp3.0\MuhasebeMaster.Core.pdb
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.DataAccess\obj\Release\netcoreapp3.0\MuhasebeMaster.DataAccess.csproj.AssemblyReference.cache
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.DataAccess\obj\Release\netcoreapp3.0\MuhasebeMaster.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.DataAccess\obj\Release\netcoreapp3.0\MuhasebeMaster.DataAccess.AssemblyInfoInputs.cache
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.DataAccess\obj\Release\netcoreapp3.0\MuhasebeMaster.DataAccess.AssemblyInfo.cs
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.DataAccess\obj\Release\netcoreapp3.0\MuhasebeMaster.DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.DataAccess\obj\Release\netcoreapp3.0\MuhasebeMaster.DataAccess.dll
+C:\Users\merte\source\repos\MuhasebeMaster\MuhasebeMaster.DataAccess\obj\Release\netcoreapp3.0\MuhasebeMaster.DataAccess.pdb

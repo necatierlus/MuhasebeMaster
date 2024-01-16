@@ -1,0 +1,15 @@
+C:\Users\Petito\source\repos\TestProject\TestProject.Business\bin\Debug\netcoreapp3.0\TestProject.Business.deps.json
+C:\Users\Petito\source\repos\TestProject\TestProject.Business\bin\Debug\netcoreapp3.0\TestProject.Business.dll
+C:\Users\Petito\source\repos\TestProject\TestProject.Business\bin\Debug\netcoreapp3.0\TestProject.Business.pdb
+C:\Users\Petito\source\repos\TestProject\TestProject.Business\bin\Debug\netcoreapp3.0\TestProject.Core.dll
+C:\Users\Petito\source\repos\TestProject\TestProject.Business\bin\Debug\netcoreapp3.0\TestProject.DataAccess.dll
+C:\Users\Petito\source\repos\TestProject\TestProject.Business\bin\Debug\netcoreapp3.0\TestProject.Entity.dll
+C:\Users\Petito\source\repos\TestProject\TestProject.Business\bin\Debug\netcoreapp3.0\TestProject.DataAccess.pdb
+C:\Users\Petito\source\repos\TestProject\TestProject.Business\bin\Debug\netcoreapp3.0\TestProject.Entity.pdb
+C:\Users\Petito\source\repos\TestProject\TestProject.Business\bin\Debug\netcoreapp3.0\TestProject.Core.pdb
+C:\Users\Petito\source\repos\TestProject\TestProject.Business\obj\Debug\netcoreapp3.0\TestProject.Business.csprojAssemblyReference.cache
+C:\Users\Petito\source\repos\TestProject\TestProject.Business\obj\Debug\netcoreapp3.0\TestProject.Business.AssemblyInfoInputs.cache
+C:\Users\Petito\source\repos\TestProject\TestProject.Business\obj\Debug\netcoreapp3.0\TestProject.Business.AssemblyInfo.cs
+C:\Users\Petito\source\repos\TestProject\TestProject.Business\obj\Debug\netcoreapp3.0\TestProject.Business.csproj.CopyComplete
+C:\Users\Petito\source\repos\TestProject\TestProject.Business\obj\Debug\netcoreapp3.0\TestProject.Business.dll
+C:\Users\Petito\source\repos\TestProject\TestProject.Business\obj\Debug\netcoreapp3.0\TestProject.Business.pdb

@@ -1,0 +1,11 @@
+C:\Users\Petito\source\repos\TestProject\TestProject.Entity\bin\Debug\netcoreapp3.0\TestProject.Entity.deps.json
+C:\Users\Petito\source\repos\TestProject\TestProject.Entity\bin\Debug\netcoreapp3.0\TestProject.Entity.dll
+C:\Users\Petito\source\repos\TestProject\TestProject.Entity\bin\Debug\netcoreapp3.0\TestProject.Entity.pdb
+C:\Users\Petito\source\repos\TestProject\TestProject.Entity\bin\Debug\netcoreapp3.0\TestProject.Core.dll
+C:\Users\Petito\source\repos\TestProject\TestProject.Entity\bin\Debug\netcoreapp3.0\TestProject.Core.pdb
+C:\Users\Petito\source\repos\TestProject\TestProject.Entity\obj\Debug\netcoreapp3.0\TestProject.Entity.csprojAssemblyReference.cache
+C:\Users\Petito\source\repos\TestProject\TestProject.Entity\obj\Debug\netcoreapp3.0\TestProject.Entity.AssemblyInfoInputs.cache
+C:\Users\Petito\source\repos\TestProject\TestProject.Entity\obj\Debug\netcoreapp3.0\TestProject.Entity.AssemblyInfo.cs
+C:\Users\Petito\source\repos\TestProject\TestProject.Entity\obj\Debug\netcoreapp3.0\TestProject.Entity.csproj.CopyComplete
+C:\Users\Petito\source\repos\TestProject\TestProject.Entity\obj\Debug\netcoreapp3.0\TestProject.Entity.dll
+C:\Users\Petito\source\repos\TestProject\TestProject.Entity\obj\Debug\netcoreapp3.0\TestProject.Entity.pdb

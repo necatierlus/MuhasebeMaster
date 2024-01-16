@@ -1,0 +1,13 @@
+C:\Users\Petito\source\repos\TestProject\TestProject.DataAccess\bin\Debug\netcoreapp3.0\TestProject.DataAccess.deps.json
+C:\Users\Petito\source\repos\TestProject\TestProject.DataAccess\bin\Debug\netcoreapp3.0\TestProject.DataAccess.dll
+C:\Users\Petito\source\repos\TestProject\TestProject.DataAccess\bin\Debug\netcoreapp3.0\TestProject.Core.dll
+C:\Users\Petito\source\repos\TestProject\TestProject.DataAccess\bin\Debug\netcoreapp3.0\TestProject.Entity.dll
+C:\Users\Petito\source\repos\TestProject\TestProject.DataAccess\bin\Debug\netcoreapp3.0\TestProject.Entity.pdb
+C:\Users\Petito\source\repos\TestProject\TestProject.DataAccess\bin\Debug\netcoreapp3.0\TestProject.Core.pdb
+C:\Users\Petito\source\repos\TestProject\TestProject.DataAccess\obj\Debug\netcoreapp3.0\TestProject.DataAccess.csprojAssemblyReference.cache
+C:\Users\Petito\source\repos\TestProject\TestProject.DataAccess\obj\Debug\netcoreapp3.0\TestProject.DataAccess.AssemblyInfoInputs.cache
+C:\Users\Petito\source\repos\TestProject\TestProject.DataAccess\obj\Debug\netcoreapp3.0\TestProject.DataAccess.AssemblyInfo.cs
+C:\Users\Petito\source\repos\TestProject\TestProject.DataAccess\obj\Debug\netcoreapp3.0\TestProject.DataAccess.csproj.CopyComplete
+C:\Users\Petito\source\repos\TestProject\TestProject.DataAccess\bin\Debug\netcoreapp3.0\TestProject.DataAccess.pdb
+C:\Users\Petito\source\repos\TestProject\TestProject.DataAccess\obj\Debug\netcoreapp3.0\TestProject.DataAccess.dll
+C:\Users\Petito\source\repos\TestProject\TestProject.DataAccess\obj\Debug\netcoreapp3.0\TestProject.DataAccess.pdb
